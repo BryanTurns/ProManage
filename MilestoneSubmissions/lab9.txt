@@ -1,6 +1,6 @@
-1. Team Number: 
+1. Team Number
     013-01
-2. Team Name: 
+2. Team Name (NEEDS REVIEW)
     TBD
 3. Team Members:
     Owen Hushka
@@ -8,21 +8,21 @@
     Ian Haneke
     Sawyer Mckenney
     Bryan Turns
-4. Application Name:
+4. Application Name
     ProManage
-5. Aplication Description
+5. Aplication Description (NEEDS REVIEW)
     TBD
-6. Vision Statement
-    TBD
+6. Vision Statement (NEEDS REVIEW)
+    "To improve productivity by providing managers smooth and simple time management tools"
 7. Version Control
     https://github.com/BryanTurns/ProManage
-8. Development Methodology
+8. Development Methodology (NEEDS REVIEW)
+    Agile
+9. Communication Plan (NEEDS REVIEW)
+    Discord
+10. Meeting Plan (NEEDS REVIEW)
     TBD
-9. Communication Plan
+11. Use Case Diagram (NEEDS REVIEW)
     TBD
-10. Meeting Plan
-    TBD
-11. Use Case Diagram
-    TBD
-12. Wireframes
+12. Wireframes (NEEDS REVIEW)
     TBD
