@@ -26,3 +26,5 @@
     TBD
 12. Wireframes (NEEDS REVIEW)
     TBD
+
+LINK FOR USE CASE DIAGRAM: https://docs.google.com/drawings/d/17J_iKVrPv7i3gJkr7xgFW0uo11LxpvOd69Py87lmANQ/edit?usp=sharing
