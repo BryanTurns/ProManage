@@ -1,0 +1,28 @@
+1. Team Number: 
+    013-01
+2. Team Name: 
+    TBD
+3. Team Members:
+    Owen Hushka
+    Sonia Purisai
+    Ian Haneke
+    Sawyer Mckenney
+    Bryan Turns
+4. Application Name:
+    ProManage
+5. Aplication Description
+    TBD
+6. Vision Statement
+    TBD
+7. Version Control
+    https://github.com/BryanTurns/ProManage
+8. Development Methodology
+    TBD
+9. Communication Plan
+    TBD
+10. Meeting Plan
+    TBD
+11. Use Case Diagram
+    TBD
+12. Wireframes
+    TBD
