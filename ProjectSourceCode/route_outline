@@ -1,10 +1,13 @@
 Route: /
 Method: GET
+Conditions:
 Purpose:
   Home page with basic info + sign in
+Data:
 
 
 Route: /signin
+Method: GET/POST
 Purpose:
   Allows users to sign into the Application using username and password
 Conditions:
@@ -13,10 +16,12 @@ Data:
 
 
 Route: /signout
+Method: GET/POST
 Purpose:
   Sign out
 Conditions:
   User is signed in
+Data:
 
 
 Route: /register

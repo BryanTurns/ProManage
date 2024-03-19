@@ -1,6 +1,6 @@
 1. Team Number
     013-01
-2. Team Name (NEEDS REVIEW)
+2. Team Name 
     Tech Titians
 3. Team Members:
     Owen Hushka
@@ -10,18 +10,25 @@
     Bryan Turns
 4. Application Name
     ProManage
-5. Aplication Description (NEEDS REVIEW)
-    TBD
-6. Vision Statement (NEEDS REVIEW)
+5. Aplication Description 
+    Application Description.pdf
+6. Vision Statement 
     "To improve productivity by providing managers smooth and simple time management tools"
 7. Version Control
     https://github.com/BryanTurns/ProManage
-8. Development Methodology (NEEDS REVIEW)
+8. Development Methodology 
     Agile
+<<<<<<< HEAD
 9. Communication Plan (NEEDS REVIEW)
     Text and Discord
 10. Meeting Plan (NEEDS REVIEW)
     TBD
+=======
+9. Communication Plan 
+    Text Chain (GroupChat)
+10. Meeting Plan 
+    Every Wednesday 5:30pm Zoom LINK: https://cuboulder.zoom.us/my/BryanTurns
+>>>>>>> 8c15e10f02736f08b8ed190309275a1456dad380
 11. Use Case Diagram (NEEDS REVIEW)
     TBD
 12. Wireframes (NEEDS REVIEW)
