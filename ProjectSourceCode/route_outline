@@ -31,7 +31,7 @@ Purpose:
 Conditions:
   User is not signed in
 Data:
-  Username, first name, last name, password hash, employee/manager, organization
+  Username, first name, last name, password hash, employee/manager, organization, store location
 
 
 Route: /tasks
