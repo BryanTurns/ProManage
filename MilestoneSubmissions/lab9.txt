@@ -1,12 +1,12 @@
 1. Team Number
     013-01
 2. Team Name (NEEDS REVIEW)
-    TBD
+    Tech Titians
 3. Team Members:
     Owen Hushka
     Sonia Purisai
     Ian Haneke
-    Sawyer Mckenney
+    Sawyer McKenney
     Bryan Turns
 4. Application Name
     ProManage
