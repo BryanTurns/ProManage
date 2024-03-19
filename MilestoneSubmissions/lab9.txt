@@ -18,20 +18,13 @@
     https://github.com/BryanTurns/ProManage
 8. Development Methodology 
     Agile
-<<<<<<< HEAD
 9. Communication Plan (NEEDS REVIEW)
     Text and Discord
 10. Meeting Plan (NEEDS REVIEW)
     TBD
-=======
-9. Communication Plan 
-    Text Chain (GroupChat)
-10. Meeting Plan 
-    Every Wednesday 5:30pm Zoom LINK: https://cuboulder.zoom.us/my/BryanTurns
->>>>>>> 8c15e10f02736f08b8ed190309275a1456dad380
 11. Use Case Diagram (NEEDS REVIEW)
     TBD
 12. Wireframes (NEEDS REVIEW)
-    TBD
+    register, login/logout, tasks
 
 LINK FOR USE CASE DIAGRAM: https://docs.google.com/drawings/d/17J_iKVrPv7i3gJkr7xgFW0uo11LxpvOd69Py87lmANQ/edit?usp=sharing
