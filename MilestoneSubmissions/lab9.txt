@@ -19,7 +19,7 @@
 8. Development Methodology (NEEDS REVIEW)
     Agile
 9. Communication Plan (NEEDS REVIEW)
-    Discord
+    Text and Discord
 10. Meeting Plan (NEEDS REVIEW)
     TBD
 11. Use Case Diagram (NEEDS REVIEW)
