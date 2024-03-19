@@ -1,0 +1,70 @@
+Route: /
+Method: GET
+Purpose:
+  Home page with basic info + sign in
+
+
+Route: /signin
+Purpose:
+  Allows users to sign into the Application using username and password
+Conditions:
+  User is not signed in
+Data:
+
+
+Route: /signout
+Purpose:
+  Sign out
+Conditions:
+  User is signed in
+
+
+Route: /register
+Method: GET/POST
+Purpose:
+  Allows users to register for the application as either a manager or employee. 
+Conditions:
+  User is not signed in
+Data:
+  Username, first name, last name, password hash, employee/manager, organization
+
+
+Route: /tasks
+Method: GET
+Purpose: 
+  For managers, display all tasks within the organization.
+  For employees, display all tasks they are assigned and maybe button to see completed tasks
+Conditions:
+  User is signed in
+Data:
+  Task data, user type, auth
+
+
+Route: /addTask (not actual page, but maybe modal with submit that has this route as the action)
+Method: POST
+Purpose:
+  Allows managers to add and assign tasks
+Conditions:
+  User is signed in as manager
+Data:
+  Task name, assigned employees, user type, auth
+
+
+Route: /editTask (not actual page, but maybe modal with submit that has this route as the action)
+Method: PATCH
+Purpose:
+  Allows managers to edit tasks
+Conditions:
+  User is signed in as manager
+Data:
+  Task name, assigned emplyees, user type, auth
+
+
+Route: /deleteTask (not actual page, but maybe modal with submit that has this route as the action)
+Method: DELETE
+Purpose:
+  Allows managers to delte tasks
+Conditions:
+  User is signed in as manager
+Data: 
+  Task name, user type, auth
