@@ -19,9 +19,9 @@
 8. Development Methodology (NEEDS REVIEW)
     Agile
 9. Communication Plan (NEEDS REVIEW)
-    Discord
+    Text Chain (GroupChat)
 10. Meeting Plan (NEEDS REVIEW)
-    TBD
+    Every Wednesday 5:30pm Zoom LINK: https://cuboulder.zoom.us/my/BryanTurns
 11. Use Case Diagram (NEEDS REVIEW)
     TBD
 12. Wireframes (NEEDS REVIEW)
