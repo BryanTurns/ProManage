@@ -10,8 +10,8 @@
     Bryan Turns
 4. Application Name
     ProManage
-5. Aplication Description (NEEDS REVIEW)
-    TBD
+5. Aplication Description 
+    Application Description.pdf
 6. Vision Statement 
     "To improve productivity by providing managers smooth and simple time management tools"
 7. Version Control
