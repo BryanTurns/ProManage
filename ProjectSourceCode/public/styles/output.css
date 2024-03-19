@@ -544,24 +544,24 @@ video {
   --tw-backdrop-sepia:  ;
 }
 
-.p-10 {
-  padding: 2.5rem;
-}
-
 .p-5 {
   padding: 1.25rem;
 }
 
-.text-xl {
-  font-size: 1.25rem;
+.text-lg {
+  font-size: 1.125rem;
   line-height: 1.75rem;
 }
 
-.text-green-700 {
+.font-bold {
+  font-weight: 700;
+}
+
+.text-red-700 {
   --tw-text-opacity: 1;
-  color: rgb(21 128 61 / var(--tw-text-opacity));
+  color: rgb(185 28 28 / var(--tw-text-opacity));
 }
 
 body {
-  body: 100%;
+  width: 100%;
 }

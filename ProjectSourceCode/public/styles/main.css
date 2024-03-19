@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 body {
-  body: 100%;
+  width: 100%;
 }

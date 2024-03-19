@@ -8,8 +8,8 @@ COPY . .
 
 RUN npm install
 
-RUN npx tailwindcss -o ./public/styles/output.css
+EXPOSE $WEB_PORT
 
-EXPOSE 3000
+ENV NODE_ENV="development"
 
 CMD ["npm", "run", "dev"]

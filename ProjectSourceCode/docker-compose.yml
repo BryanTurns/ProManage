@@ -2,26 +2,24 @@ version: "3.9"
 services:
   db:
     image: postgres
-    ports:
-      - "5432:5432"
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+    env_file:
+      - .env
+    expose:
+      - $DB_PORT
     volumes:
       - /var/lib/postgresql/data
+      - ./init_data:/docker-entrypoint-initdb.d
   web:
     build: .
+    env_file:
+      - .env
+    tty: true
     ports:
-      - "$PORT:$PORT"
-    environment:
-      DB_HOST: db
-      DB_PORT: 5432
-      DB_USER: postgres
-      DB_PASSWORD: postgres
-      DB_NAME: postgres
+      - "$WEB_PORT:$WEB_PORT"
     volumes:
       - ./:/app
     depends_on:
       - db
     links:
       - db
+#BCRYPT CAUSING ERR BC OF OP SYS
