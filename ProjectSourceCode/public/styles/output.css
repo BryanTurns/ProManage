@@ -553,13 +553,9 @@ video {
   line-height: 1.75rem;
 }
 
-.font-bold {
-  font-weight: 700;
-}
-
-.text-red-700 {
+.text-blue-200 {
   --tw-text-opacity: 1;
-  color: rgb(185 28 28 / var(--tw-text-opacity));
+  color: rgb(191 219 254 / var(--tw-text-opacity));
 }
 
 body {
