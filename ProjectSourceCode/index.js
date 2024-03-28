@@ -53,6 +53,9 @@ app.use(
 app.get("/", (req, res) => {
   res.render("./pages/home");
 });
+app.get("/managerTasks", (req, res) => {
+  res.render("./pages/managerTasks")
+})
 
 app.listen(PORT, (error) => {
   if (!error)
@@ -62,3 +65,6 @@ app.listen(PORT, (error) => {
     );
   else console.log("Error occurred, server can't start", error);
 });
+
+
+
