@@ -1,0 +1,28 @@
+<div class="container">
+    <h2>Manager Register</h2>
+    <form action="/registerManager" method="POST">
+        <div>
+            <h1>Promanage</h1>
+            <div>
+            <label for = "username">Username</label>
+            <input type="username" id = "username" name = "username" required>
+            <br>
+            <label for = "firstname">First Name</label>
+            <input type="firstname" id = "firstname" name = "firstname" required>
+            <br>
+            <label for = "lastname">Last Name</label>
+            <input type="lastname" id = "lastname" name = "lastname" required>
+            <br>
+            <label for = "password">Password</label>
+            <input type = "password" id = "password" name = "password" required>
+            <br>
+            <label for = "branch">Branch</label>
+            <input type="branch" id = "branch" name = "branch" required>
+        </div>
+        <button type="submit">
+            Register
+        </button>
+        <p>Have an Account?<a class = "nav-link" href = "/loginManager" style = "color:blue;"> login </a></p>
+        </div>
+    </form>
+</div>
