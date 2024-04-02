@@ -1,28 +1,25 @@
-<div class="container">
-    <h2>Manager Register</h2>
-    <form action="/registerManager" method="POST">
-        <div>
-            <h1>Promanage</h1>
-            <div>
-            <label for = "username">Username</label>
-            <input type="username" id = "username" name = "username" required>
-            <br>
-            <label for = "firstname">First Name</label>
-            <input type="firstname" id = "firstname" name = "firstname" required>
-            <br>
-            <label for = "lastname">Last Name</label>
-            <input type="lastname" id = "lastname" name = "lastname" required>
-            <br>
-            <label for = "password">Password</label>
-            <input type = "password" id = "password" name = "password" required>
-            <br>
-            <label for = "branch">Branch</label>
-            <input type="branch" id = "branch" name = "branch" required>
+<div class="container" style="font-family: Arial, sans-serif; max-width: 500px; margin: 50px auto; padding: 20px; background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 0.25rem;">
+    <h2 style="color: #007bff; text-align: center; margin-bottom: 20px;">Manager Register</h2>
+    <form action="/registerManager" method="POST" style="display: flex; flex-direction: column;">
+        <div style="text-align: center; margin-bottom: 20px;">
+            <img src="../images/Screen Shot 2024-04-02 at 3.46.18 PM.png" alt="Promanage Logo" style="max-width: 100px;">
         </div>
-        <button type="submit">
-            Register
-        </button>
-        <p>Have an Account?<a class = "nav-link" href = "/loginManager" style = "color:blue;"> login </a></p>
-        </div>
+        <label for="username" style="margin-bottom: .5rem; color: #495057;">Username</label>
+        <input type="text" id="username" name="username" required style="margin-bottom: 1rem; padding: .375rem .75rem; border: 1px solid #ced4da; border-radius: 0.25rem;">
+
+        <label for="firstname" style="margin-bottom: .5rem; color: #495057;">First Name</label>
+        <input type="text" id="firstname" name="firstname" required style="margin-bottom: 1rem; padding: .375rem .75rem; border: 1px solid #ced4da; border-radius: 0.25rem;">
+
+        <label for="lastname" style="margin-bottom: .5rem; color: #495057;">Last Name</label>
+        <input type="text" id="lastname" name="lastname" required style="margin-bottom: 1rem; padding: .375rem .75rem; border: 1px solid #ced4da; border-radius: 0.25rem;">
+
+        <label for="password" style="margin-bottom: .5rem; color: #495057;">Password</label>
+        <input type="password" id="password" name="password" required style="margin-bottom: 1rem; padding: .375rem .75rem; border: 1px solid #ced4da; border-radius: 0.25rem;">
+
+        <label for="branch" style="margin-bottom: .5rem; color: #495057;">Branch</label>
+        <input type="text" id="branch" name="branch" required style="margin-bottom: 1rem; padding: .375rem .75rem; border: 1px solid #ced4da; border-radius: 0.25rem;">
+
+        <button type="submit" style="padding: .375rem .75rem; color: #fff; background-color: #007bff; border-color: #007bff; border-radius: 0.25rem; cursor: pointer;">Register</button>
+        <p style="text-align: center;">Have an Account? <a href="/loginManager" style="color: #007bff; text-decoration: none;">login</a></p>
     </form>
 </div>

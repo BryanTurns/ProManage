@@ -588,8 +588,16 @@ video {
   }
 }
 
+.flex {
+  display: flex;
+}
+
 .rounded {
   border-radius: 0.25rem;
+}
+
+.border {
+  border-width: 1px;
 }
 
 .p-5 {
