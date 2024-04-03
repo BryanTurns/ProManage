@@ -5,11 +5,11 @@ const path = require("path");
 const pgp = require("pg-promise")(); // To connect to the Postgres DB from the node server
 const bodyParser = require("body-parser");
 const session = require("express-session"); // To set the session object. To store or access session data, use the `req.session`, which is (generally) serialized as JSON by the store.
-const bcrypt = require("bcrypt"); //  To hash passwords
+// const bcrypt = require("bcrypt"); //  To hash passwords
 const axios = require("axios");
 
 const app = express();
-const PORT = process.env.WEB_PORT;
+const PORT = process.env.WEB_PORT == undefined ? 3000 : process.env.WEB_PORT;
 
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -54,17 +54,11 @@ app.get("/", (req, res) => {
   res.render("./pages/home");
 });
 app.get("/managerTasks", (req, res) => {
-  res.render("./pages/managerTasks")
-})
+  res.render("./pages/managerTasks");
+});
 
 app.listen(PORT, (error) => {
   if (!error)
-    console.log(
-      "Server is test Running, and App is listening on port " +
-        process.env.WEB_PORT
-    );
+    console.log("Server is test Running, and App is listening on port " + PORT);
   else console.log("Error occurred, server can't start", error);
 });
-
-
-
