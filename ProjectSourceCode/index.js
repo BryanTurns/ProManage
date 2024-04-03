@@ -53,8 +53,21 @@ app.use(
 app.get("/", (req, res) => {
   res.render("./pages/home");
 });
+app.get("/home", (req, res) => {
+  res.redirect("/");
+});
 app.get("/managerTasks", (req, res) => {
   res.render("./pages/managerTasks");
+});
+
+app.get("/register", (req, res) => {
+  res.render("./pages/register");
+});
+app.get("/register_employee", (req, res) => {
+  res.render("./pages/registerEmployee");
+});
+app.get("/register_manager", (req, res) => {
+  res.render("./pages/registerManager");
 });
 
 app.listen(PORT, (error) => {
