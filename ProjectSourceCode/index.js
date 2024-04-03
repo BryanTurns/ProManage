@@ -10,13 +10,6 @@ const session = require("express-session"); // To set the session object. To sto
 const axios = require("axios");
 
 const app = express();
-let PORT;
-if (process.env.WEB_PORT == undefined) {
-  PORT = 3000;
-  console.log("TEST");
-} else {
-  PORT = process.env.WEB_PORT;
-}
 const PORT = process.env.WEB_PORT == undefined ? 3000 : process.env.WEB_PORT;
 
 app.use(express.static(path.join(__dirname, "public")));

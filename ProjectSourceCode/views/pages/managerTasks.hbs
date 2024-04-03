@@ -1,14 +1,34 @@
+<style>
+  .container {
+    width: 33.33%; 
+    height: 100vh; 
+    background-color: black;
+    float: left; 
+  }
+  .col-sm {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    top: 50;
+  }
+
+</style>
+
+
+
+
+
 <div class="container">
   <div class="row" color="red">
     <div class="col-sm">
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#create-task">Create Task</button>
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#update-task">Update Task</button>
+      <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#create-task">Create Task</button>
+      <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#update-task">Update Task</button>
       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#delete-task">Delete Task</button>
     </div>
-    <div class="col-6">
-      Below is where a list of all employees will go
-    </div>
   </div>
+</div>
+<div class="col-6">
+  Below is where a list of all employees will go
 </div>
 
 

@@ -1,3 +1,6 @@
 **/node_modules
 package-lock.json
-/public/output.css
+**/public/output.css
+**/db_data
+public/output.css
+db_data
