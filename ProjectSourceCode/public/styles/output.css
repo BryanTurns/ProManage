@@ -630,6 +630,11 @@ video {
   padding-right: 1.5rem;
 }
 
+.px-12 {
+  padding-left: 3rem;
+  padding-right: 3rem;
+}
+
 .text-lg {
   font-size: 1.125rem;
   line-height: 1.75rem;

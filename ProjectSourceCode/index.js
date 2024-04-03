@@ -70,6 +70,21 @@ app.get("/register_manager", (req, res) => {
   res.render("./pages/registerManager");
 });
 
+// Needs to handle which page to render using session vars
+app.get("/tasks", (req, res) => {
+  var isManager = true;
+
+  if (isManager) {
+    res.render("./pages/managerTasks");
+  } else {
+    res.render("./pages/employeeTasks");
+  }
+});
+
+app.get("/login", (req, res) => {
+  res.render("./pages/login");
+});
+
 app.listen(PORT, (error) => {
   if (!error)
     console.log("Server is test Running, and App is listening on port " + PORT);
