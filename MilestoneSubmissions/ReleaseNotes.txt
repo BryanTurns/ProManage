@@ -1,0 +1,4 @@
+Release 04/02/2024
+1. Created Basic Functionality with NAV BAR
+2. Implmented Login,Register,Home,Task,Footer HTML Files
+3. Bug Fixes
