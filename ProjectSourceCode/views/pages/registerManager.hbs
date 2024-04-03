@@ -1,8 +1,10 @@
-<div class="container" style="font-family: Arial, sans-serif; max-width: 500px; margin: 50px auto; padding: 20px; background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 0.25rem;">
-    <h2 style="color: #007bff; text-align: center; margin-bottom: 20px;">Manager Register</h2>
+<title>Manager Register</title>
+
+<div class="container" style="font-family: gill sans, sans-serif; max-width: 500px; margin: 50px auto; padding: 20px; background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 0.25rem;">
+    <h2 style="color: #007bff; text-align: center; font-weigth: 1000; margin-bottom: 20px;">Register As a Manager</h2>
     <form action="/registerManager" method="POST" style="display: flex; flex-direction: column;">
         <div style="text-align: center; margin-bottom: 20px;">
-            <img src="../images/Screen Shot 2024-04-02 at 3.46.18 PM.png" alt="Promanage Logo" style="max-width: 100px;">
+            <img src="./images/shield.png" style="max-width: 100px; margin-left: 11rem;">
         </div>
         <label for="username" style="margin-bottom: .5rem; color: #495057;">Username</label>
         <input type="text" id="username" name="username" required style="margin-bottom: 1rem; padding: .375rem .75rem; border: 1px solid #ced4da; border-radius: 0.25rem;">
@@ -20,6 +22,6 @@
         <input type="text" id="branch" name="branch" required style="margin-bottom: 1rem; padding: .375rem .75rem; border: 1px solid #ced4da; border-radius: 0.25rem;">
 
         <button type="submit" style="padding: .375rem .75rem; color: #fff; background-color: #007bff; border-color: #007bff; border-radius: 0.25rem; cursor: pointer;">Register</button>
-        <p style="text-align: center;">Have an Account? <a href="/loginManager" style="color: #007bff; text-decoration: none;">login</a></p>
+        <p style="text-align: center;">Have an Account? <a href="/login" style="color: #007bff; text-decoration: none;">Login</a></p>
     </form>
 </div>

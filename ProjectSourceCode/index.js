@@ -70,6 +70,10 @@ app.get("/register_employee", (req, res) => {
 app.get("/register_manager", (req, res) => {
   res.render("./pages/registerManager");
 });
+app.get("/login", (req, res) => {
+  res.render("./pages/login");
+});
+
 
 // Needs to handle which page to render using session vars
 app.get("/tasks", (req, res) => {
