@@ -3,19 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start-server": "nodemon -L index.js",
-    "start-tailwind": "npx tailwindcss -i ./public/styles/main.css -o ./public/styles/output.css TAILWIND_MODE=watch --watch",
-    "dev": "concurrently --kill-others  \"npm run start-server\" \"npm run start-tailwind\" ",
-    "prod": "nodemon -L index.js ",
-    "dev1": "npm-run-all --parallel start-server start-tailwind"
-  },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "axios": "^1.6.8",
-    "bcryptjs": "^2.4.3",
+    "bcrypt": "^5.1.0",
     "body-parser": "^1.20.2",
     "concurrently": "^8.2.2",
     "express": "^4.18.3",
@@ -25,11 +17,22 @@
     "npm-run-all": "^4.1.5",
     "path": "^0.12.7",
     "pg-promise": "^11.5.4",
-    "postcss-cli": "^11.0.0"
+    "postcss-cli": "^11.0.0",
+    "nodemon": "^2.0.7"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.18",
     "postcss": "^8.4.37",
-    "tailwindcss": "^3.4.1"
+    "tailwindcss": "^3.4.1",
+    "nodemon": "^2.0.7"
+  },
+  "scripts": {
+    "prestart": "npm install",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon -L index.js",
+    "start-tailwind": "npx tailwindcss -i ./public/styles/main.css -o ./public/styles/output.css TAILWIND_MODE=watch --watch",
+    "dev": "concurrently --kill-others  \"npm run start-server\" \"npm run start-tailwind\" ",
+    "prod": "nodemon -L index.js ",
+    "dev1": "npm-run-all --parallel start-server start-tailwind"
   }
 }

@@ -4,9 +4,8 @@ const Handlebars = require("handlebars");
 const path = require("path");
 const pgp = require("pg-promise")(); // To connect to the Postgres DB from the node server
 const bodyParser = require("body-parser");
+const bcrypt = require('bcrypt'); //  To hash passwords
 const session = require("express-session"); // To set the session object. To store or access session data, use the `req.session`, which is (generally) serialized as JSON by the store.
-// const bcrypt = require("bcrypt"); //  To hash passwords
-// const bcrypt = require("bcrypt"); //  To hash passwords
 const axios = require("axios");
 
 const app = express();
@@ -64,14 +63,61 @@ app.get("/managerTasks", (req, res) => {
 app.get("/register", (req, res) => {
   res.render("./pages/register");
 });
+
 app.get("/register_employee", (req, res) => {
   res.render("./pages/registerEmployee");
 });
+
 app.get("/register_manager", (req, res) => {
   res.render("./pages/registerManager");
 });
+
 app.get("/login", (req, res) => {
   res.render("./pages/login");
+});
+
+app.get('/logout',(req, res) =>
+{
+  res.render('pages/logout');
+  req.session.destroy((err =>
+    {
+      if(err)
+      {
+        console.log("Error Logging Out");
+      };
+    }));
+});
+app.post("/registerManager", async (req, res) => 
+{
+  try 
+  {
+    const hash = await bcrypt.hash(req.body.password, 10); 
+    await db.none("INSERT INTO users (username, password, firstname, lastname, branch, manager) VALUES ($1, $2, $3, $4, $5, $6)", [req.body.username, hash, req.body.firstname, req.body.lastname, req.body.branch, true]);
+    res.redirect("/login");
+  } 
+  catch (error) 
+  {
+    console.log("Failed to register manager.");
+    console.error('Error inserting into Database', error);
+    res.redirect("/register_manager");
+  }
+});
+
+
+app.post("/registerEmployee", async (req, res) => 
+{
+  try 
+  {
+    const hash = await bcrypt.hash(req.body.password, 10); 
+    await db.none("INSERT INTO users (username, password, firstname, lastname, branch, manager) VALUES ($1, $2, $3, $4, $5, $6)", [req.body.username, hash, req.body.firstname, req.body.lastname, req.body.branch, false]);
+    res.redirect("/login");
+  } 
+  catch (error) 
+  {
+    console.log("Failed to register employee.");
+    console.error('Error inserting into Database', error);
+    res.redirect("/register_employee");
+  }
 });
 
 
