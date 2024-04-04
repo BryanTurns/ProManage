@@ -1,3 +1,9 @@
 public/styles/output.css
+ProjectSourceCode/node_modules
+ProjectSourceCode/package-lock.json
+**/public/styles/output
+ProjectSourceCode/db_data
+ProjectSourceCode/public/styles/output.css
+db_data
 deleted:    db_data/postmaster.pid
 modified:   public/styles/output.css
