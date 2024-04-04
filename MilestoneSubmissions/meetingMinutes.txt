@@ -1,1 +1,10 @@
 Meeting 04/03/2024
+Goals: 
+1. Ensure Everyone Has pulled up to date repo
+2. Figure out Data Base Schema
+
+This week: Ian setup data base and middle ware for task page. 
+Data Base Schema: Users table, Taks Table, Assoication Task Table, Manager Assigned, Priority, Due Date, Task ID , Manager, 
+Users TO Task: Task ID user ID Mnager Assigned ID
+Make Taks hidden before you login.
+DataBase Scheme: 
