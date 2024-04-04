@@ -31,7 +31,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon -L index.js",
     "start-tailwind": "npx tailwindcss -i ./public/styles/main.css -o ./public/styles/output.css TAILWIND_MODE=watch --watch",
-    "dev": "concurrently --kill-others  \"npm run start-server\" \"npm run start-tailwind\" ",
+    "dev": "concurrently --kill-others  \"npm run start\" \"npm run start-tailwind\" ",
     "prod": "nodemon -L index.js ",
     "dev1": "npm-run-all --parallel start-server start-tailwind"
   }
