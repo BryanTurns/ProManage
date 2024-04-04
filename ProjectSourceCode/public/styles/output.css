@@ -625,28 +625,9 @@ video {
   background-color: rgb(191 219 254 / var(--tw-bg-opacity));
 }
 
-.p-5 {
-  padding: 1.25rem;
-}
-
-.px-12 {
-  padding-left: 3rem;
-  padding-right: 3rem;
-}
-
 .px-2 {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
-}
-
-.text-lg {
-  font-size: 1.125rem;
-  line-height: 1.75rem;
-}
-
-.text-blue-200 {
-  --tw-text-opacity: 1;
-  color: rgb(191 219 254 / var(--tw-text-opacity));
 }
 
 .transition {
