@@ -8,3 +8,11 @@ Data Base Schema: Users table, Taks Table, Assoication Task Table, Manager Assig
 Users TO Task: Task ID user ID Mnager Assigned ID
 Make Taks hidden before you login.
 DataBase Scheme: 
+
+04/04/2024 TA Meeting Minutes
+      Have a end to end frame work by next week and have data present. 
+      Have something to working end to end.
+      Have interactions working end to end 
+      One or two work on unit tests
+      Sawyer does test cases
+      Register API and other then login 
