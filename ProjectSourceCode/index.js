@@ -203,11 +203,11 @@ app.post("/login", async (req, res) => {
     if (match & req.body.manager) {
       req.session.user = user;
       req.session.save();
-      res.redirect("/managerTasks");
+      res.redirect("/tasks");
     } else if (match & !req.body.manager) {
       req.session.user = user;
       req.session.save();
-      res.redirect("/employeeTasks");
+      res.redirect("/tasks");
     } else {
       return res.render("pages/login", {
         message: "incorrect user or password",
