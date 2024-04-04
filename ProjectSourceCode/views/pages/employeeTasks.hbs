@@ -1,11 +1,32 @@
+<style>
+  .container {
+    width: 33.33%; 
+    height: 100vh; 
+    background-color: black;
+    float: left; 
+  }
+  .col-sm {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    top: 50;
+  }
+</style>
+
+
+
 <div class="container">
-  <div class="row" color="red">
+  <div class="row">
     <div class="col-sm">
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#view-task">View Task</button>
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#update-status">Update Status</button>
+      <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#view-task">View Task</button>
+      <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#update-status">Update Status</button>
       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#speak-with-manager">Speak With Manager</button>
     </div>
   </div>
 </div>
+<div class="col-6">
+  Not sure how to make that progress bar
+</div>
+
 
 
