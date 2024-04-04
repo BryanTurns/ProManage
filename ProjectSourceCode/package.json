@@ -36,6 +36,6 @@
     "prod": "nodemon -L index.js ",
     "dev": "npm run start-tailwind && npm run start",
     "test": "mocha",
-    "testandrun": "npm run prestart && npm run test"
+    "testandrun": "npm run prestart && npm run test && npm run dev"
   }
 }
