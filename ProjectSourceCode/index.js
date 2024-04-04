@@ -64,6 +64,9 @@ app.get("/home", (req, res) => {
 app.get("/managerTasks", (req, res) => {
   res.render("./pages/managerTasks");
 });
+app.get("/employeeTasks", (req, res) => {
+  res.render("./pages/employeeTasks");
+});
 
 app.get("/register", (req, res) => {
   res.render("./pages/register");
