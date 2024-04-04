@@ -1,3 +1,33 @@
-<p class="p-5 text-lg text-blue-200">
-  Hello World!
-</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .grid-container {
+            display: grid;
+            grid-template-rows: 1fr 1fr; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 10px; /* Gap between grid items */
+            margin-top: 150px; /* Add margin to the top */
+        }
+        .grid-item {
+            background-color: #f0f0f0;
+            padding: 20px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="grid-container">
+        <div class="grid-item">Updates and Announcements</div>
+        <div class="grid-item">About ProManage</div>
+        <div class="grid-item">Info</div> 
+        <div class="grid-item"><img src="./" alt="Possible Pictures"></div> 
+    </div>
+
+    <!-- Scripts can be placed at the end of the body for better performance -->
+</body>
+</html>
+

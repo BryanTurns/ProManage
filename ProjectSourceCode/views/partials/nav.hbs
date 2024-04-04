@@ -1,9 +1,20 @@
 <nav class="navbar navbar-dark bg-dark sticky-top">
-  <div class="container-fluid justify-content-start">
-    <a class="navbar-brand" href="/">ProManage</a>
-    <a class="navbar-text px-12 me-auto" href="/tasks">Tasks</a>
-    {{! Register/signin needs to depend on if user is signed in }}
-    <a class="navbar-text px-12" href="/register">Register</a>
-    <a class="navbar-text px-12" href="/login">Login</a>
+  <div class="container-fluid d-flex">
+    <a class="navbar-brand me-auto" href="/home">ProManage</a>
+    <div class="ml-auto">
+      <a class="navbar-text px-2" href="/tasks">Tasks</a>
+      <!-- Add Handlebars conditional statements here -->
+      {{#if session.user}}
+        {{#if session.user.manager}}
+          <a class="navbar-text px-2" href="/managerTasks">Manager Tasks</a>
+        {{else}}
+          <a class="navbar-text px-2" href="/employeeTasks">Employee Tasks</a>
+        {{/if}}
+        <a class="navbar-text px-2" href="/logout">Logout</a>
+      {{else}}
+        <a class="navbar-text px-2" href="/register">Register</a>
+        <a class="navbar-text px-2" href="/login">Login</a>
+      {{/if}}
+    </div>
   </div>
 </nav>
