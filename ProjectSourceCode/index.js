@@ -58,7 +58,13 @@ app.use(
 );
 
 const auth = (req, res, next) => {
-  if (!req.session.user && req.url != "/login" && req.url != "/register") {
+  if (
+    !req.session.user &&
+    req.url != "/login" &&
+    req.url != "/register" &&
+    req.url != "/register_manager" &&
+    req.url != "/register_employee"
+  ) {
     // Default to login page.
     return res.redirect("/login");
   }
@@ -68,43 +74,43 @@ const auth = (req, res, next) => {
 app.use(auth);
 
 app.get("/", (req, res) => {
-  res.render("./pages/home");
+  res.render("./pages/home", { auth: req.session.user });
 });
 app.get("/home", (req, res) => {
-  res.redirect("/");
+  res.redirect("/", {});
 });
 app.get("/tasks", (req, res) => {
   if (req.session.user.manager) {
-    res.render("./pages/managerTasks");
+    res.render("./pages/managerTasks", { auth: req.session.user });
   } else {
-    res.render("./pages/employeeTasks");
+    res.render("./pages/employeeTasks", { auth: req.session.user });
   }
 });
 app.get("/managerTasks", (req, res) => {
-  res.render("./pages/managerTasks");
+  res.render("./pages/managerTasks", { auth: req.session.user });
 });
 app.get("/employeeTasks", (req, res) => {
-  res.render("./pages/employeeTasks");
+  res.render("./pages/employeeTasks", { auth: req.session.user });
 });
 
 app.get("/register", (req, res) => {
-  res.render("./pages/register");
+  res.render("./pages/register", { auth: req.session.user });
 });
 
 app.get("/register_employee", (req, res) => {
-  res.render("./pages/registerEmployee");
+  res.render("./pages/registerEmployee", { auth: req.session.user });
 });
 
 app.get("/register_manager", (req, res) => {
-  res.render("./pages/registerManager");
+  res.render("./pages/registerManager", { auth: req.session.user });
 });
 
 app.get("/login", (req, res) => {
-  res.render("./pages/login");
+  res.render("./pages/login", { auth: req.session.user });
 });
 
 app.get("/logout", (req, res) => {
-  res.render("pages/logout");
+  res.render("pages/logout", { auth: req.session.user });
 });
 
 app.post("/logout", (req, res) => {
