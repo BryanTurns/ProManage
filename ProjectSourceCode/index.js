@@ -105,7 +105,7 @@ app.get("/register_employee", (req, res) => {
   res.render("./pages/registerEmployee", { auth: req.session.user });
 });
 
-app.get("/register_manager", (req, res) => {
+app.get("/registerManager", (req, res) => {
   res.render("./pages/registerManager", { auth: req.session.user });
 });
 
@@ -127,12 +127,20 @@ app.post("/logout", (req, res) => {
 });
 app.post("/registerManager", async (req, res) => {
   try {
+    if(req.body.password != req.body.confirmpassword)
+    {
+        return res.render("pages/registerManager", {
+        message: "Passwords do not match",
+        error: true,
+      });
+    }
     const hash = await bcrypt.hash(req.body.password, 10);
     await db.none(
-      "INSERT INTO users (username, password, firstname, lastname, branch, manager) VALUES ($1, $2, $3, $4, $5, $6)",
+      "INSERT INTO users (username, password, confirmpassword, firstname, lastname, branch, manager) VALUES ($1, $2, $3, $4, $5, $6, $7)",
       [
         req.body.username,
         hash,
+        req.body.confirmpassword,
         req.body.firstname,
         req.body.lastname,
         req.body.branch,
@@ -143,7 +151,7 @@ app.post("/registerManager", async (req, res) => {
     res.redirect("/login");
   } catch (error) {
     if (error.code === "23505") {
-      res.render("pages/register_manager", {
+      res.render("pages/registerManager", {
         message: "username taken",
         error: true,
       });
@@ -155,18 +163,26 @@ app.post("/registerManager", async (req, res) => {
     }
     console.log("Failed to register manager.");
     console.error("Error inserting into Database", error);
-    res.redirect("/register_manager");
+    res.redirect("/registerManager");
   }
 });
 
 app.post("/registerEmployee", async (req, res) => {
   try {
     const hash = await bcrypt.hash(req.body.password, 10); // Correctly wait for the hash to complete
+    if(req.body.password != req.body.confirmpassword)
+    {
+        return res.render("pages/registerEmployee", {
+        message: "Passwords do not match",
+        error: true,
+      });
+    }
     await db.none(
-      "INSERT INTO users (username, password, firstname, lastname, branch, manager) VALUES ($1, $2, $3, $4, $5, $6)",
+      "INSERT INTO users (username, password, confirmpassword, firstname, lastname, branch, manager) VALUES ($1, $2, $3, $4, $5, $6, $7)",
       [
         req.body.username,
         hash,
+        req.body.confirmpassword,
         req.body.firstname,
         req.body.lastname,
         req.body.branch,
