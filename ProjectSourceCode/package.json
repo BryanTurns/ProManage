@@ -24,15 +24,18 @@
     "autoprefixer": "^10.4.18",
     "nodemon": "^2.0.7",
     "postcss": "^8.4.37",
-    "tailwindcss": "^3.4.1"
+    "tailwindcss": "^3.4.1",
+    "mocha": "^6.2.2",
+    "chai-http": "^4.3.0",
+    "chai": "^4.2.0"
   },
   "scripts": {
     "prestart": "npm install",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon -L index.js",
-    "start-tailwind": "npx tailwindcss -i ./public/styles/main.css -o ./public/styles/output.css TAILWIND_MODE=watch --watch",
-    "dev": "concurrently --kill-others  \"npm run start\" \"npm run start-tailwind\" ",
+    "start-tailwind": "npx tailwindcss -i ./public/styles/main.css -o ./public/styles/output.css ",
     "prod": "nodemon -L index.js ",
-    "dev1": "npm-run-all --parallel start-server start-tailwind"
+    "dev": "npm run start-tailwind && npm run start",
+    "test": "mocha",
+    "testandrun": "npm run prestart && npm run test"
   }
 }

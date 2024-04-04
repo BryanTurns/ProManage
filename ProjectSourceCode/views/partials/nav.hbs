@@ -1,16 +1,16 @@
 <nav class="navbar navbar-dark bg-dark sticky-top">
   <div class="container-fluid d-flex">
     <a class="navbar-brand" href="/home">ProManage</a>
-    <div class="ml-auto">
 
-      <!-- Add Handlebars conditional statements here -->
-      {{#if session.user}}
-        <a class="navbar-text px-2" href="/tasks">Tasks</a>
-        <a class="navbar-text px-2" href="/logout">Logout</a>
-      {{else}}
-        <a class="navbar-text px-2" href="/register">Register</a>
-        <a class="navbar-text px-2" href="/login">Login</a>
-      {{/if}}
-    </div>
+    {{! <div class="ml-auto"> }}
+    <!-- Add Handlebars conditional statements here -->
+    {{#if auth}}
+      <a class="navbar-text px-4 me-auto" href="/tasks">Tasks</a>
+      <a class="navbar-text px-6" href="/logout">Logout</a>
+    {{else}}
+      <a class="navbar-text px-6 ml-auto" href="/register">Register</a>
+      <a class="navbar-text px-6" href="/login">Login</a>
+    {{/if}}
+    {{! </div> }}
   </div>
 </nav>
