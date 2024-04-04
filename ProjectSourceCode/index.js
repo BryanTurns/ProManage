@@ -101,7 +101,7 @@ app.get("/register", (req, res) => {
   res.render("./pages/register", { auth: req.session.user });
 });
 
-app.get("/register_employee", (req, res) => {
+app.get("/registerEmployee", (req, res) => {
   res.render("./pages/registerEmployee", { auth: req.session.user });
 });
 
@@ -127,9 +127,8 @@ app.post("/logout", (req, res) => {
 });
 app.post("/registerManager", async (req, res) => {
   try {
-    if(req.body.password != req.body.confirmpassword)
-    {
-        return res.render("pages/registerManager", {
+    if (req.body.password != req.body.confirmpassword) {
+      return res.render("pages/registerManager", {
         message: "Passwords do not match",
         error: true,
       });
@@ -170,9 +169,8 @@ app.post("/registerManager", async (req, res) => {
 app.post("/registerEmployee", async (req, res) => {
   try {
     const hash = await bcrypt.hash(req.body.password, 10); // Correctly wait for the hash to complete
-    if(req.body.password != req.body.confirmpassword)
-    {
-        return res.render("pages/registerEmployee", {
+    if (req.body.password != req.body.confirmpassword) {
+      return res.render("pages/registerEmployee", {
         message: "Passwords do not match",
         error: true,
       });
