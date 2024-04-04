@@ -57,6 +57,16 @@ app.use(
   })
 );
 
+const auth = (req, res, next) => {
+  if (!req.session.user && req.url != "/login" && req.url != "/register") {
+    // Default to login page.
+    return res.redirect("/login");
+  }
+  next();
+};
+// Authentication Required
+app.use(auth);
+
 app.get("/", (req, res) => {
   res.render("./pages/home");
 });
@@ -64,14 +74,10 @@ app.get("/home", (req, res) => {
   res.redirect("/");
 });
 app.get("/tasks", (req, res) => {
-  if (req.session.user) {
-    if (req.session.user.manager) {
-      res.render("./pages/managerTasks");
-    } else {
-      res.render("./pages/employeeTasks");
-    }
+  if (req.session.user.manager) {
+    res.render("./pages/managerTasks");
   } else {
-    res.redirect("/login");
+    res.render("./pages/employeeTasks");
   }
 });
 app.get("/managerTasks", (req, res) => {
@@ -181,14 +187,6 @@ app.post("/login", async (req, res) => {
     res.render("pages/login", { message: "user not found", error: true });
   }
 });
-// Authentication Middleware.
-const auth = (req, res, next) => {
-  if (!req.session.user) {
-    // Default to login page.
-    return res.redirect("/login");
-  }
-  next();
-};
 
 app.get("/login", (req, res) => {
   res.render("./pages/login");
