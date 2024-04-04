@@ -132,6 +132,14 @@ app.post("/registerManager", async (req, res) => {
     console.log("successfully inserted into the database");
     res.redirect("/login");
   } catch (error) {
+    if (error.code === '23505')
+    {
+      res.render("pages/register_manager", { message: "username taken", error: true });
+    }
+    else
+    {
+      res.render("pages/registerManager", { message: "an error has occurred", error: true });
+    }
     console.log("Failed to register manager.");
     console.error("Error inserting into Database", error);
     res.redirect("/register_manager");
@@ -154,10 +162,18 @@ app.post("/registerEmployee", async (req, res) => {
     );
     console.log("successfully inserted into the database");
     res.redirect("/login");
-  } catch (error) {
+  } catch (error) 
+  {
+    if (error.code === '23505')
+    {
+      res.render("pages/registerEmployee", { message: "username taken", error: true });
+    }
+    else
+    {
+      res.render("pages/registerEmployee", { message: "an error has occurred", error: true });
+    }
     console.log("Failed to register employee.");
     console.error("Error inserting into Database", error);
-    res.redirect("/register_employee");
   }
 });
 
@@ -178,11 +194,13 @@ app.post("/login", async (req, res) => {
       req.session.save();
       res.redirect("/employeeTasks");
     }
-    return res.render("pages/login", {
-      message: "incorrect user or password",
-      error: true,
-    });
-  } catch (error) {
+    else
+    {
+      return res.render("pages/login", {message: "incorrect user or password", error: true});
+    }
+  } 
+  catch (error) 
+  {
     console.log(error);
     res.render("pages/login", { message: "user not found", error: true });
   }
