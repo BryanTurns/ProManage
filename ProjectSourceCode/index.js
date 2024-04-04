@@ -210,8 +210,13 @@ app.get("/login", (req, res) => {
   res.render("./pages/login");
 });
 
-app.listen(PORT, (error) => {
+module.exports = app.listen(PORT, (error) => {
   if (!error)
     console.log("Server is test Running, and App is listening on port " + PORT);
   else console.log("Error occurred, server can't start", error);
+});
+
+
+app.get('/welcome', (req, res) => {
+  res.json({status: 'success', message: 'Welcome!'});
 });
