@@ -44,6 +44,11 @@ db.connect()
     console.log("ERROR:", error.message || error);
   });
 
+app.use(session({
+  secret: 'XASDASDA',
+  saveUninitialized: true,
+  resave: true
+}))
 app.use(
   bodyParser.urlencoded({
     extended: true,
@@ -64,6 +69,10 @@ app.get("/register", (req, res) => {
   res.render("./pages/register");
 });
 
+app.get("/employeeTasks", (req, res) => {
+  res.render("./pages/employeeTasks");
+});
+
 app.get("/register_employee", (req, res) => {
   res.render("./pages/registerEmployee");
 });
@@ -76,9 +85,14 @@ app.get("/login", (req, res) => {
   res.render("./pages/login");
 });
 
+
 app.get('/logout',(req, res) =>
 {
   res.render('pages/logout');
+});
+
+app.post('/logout',(req, res) =>
+{
   req.session.destroy((err =>
     {
       if(err)
@@ -86,6 +100,7 @@ app.get('/logout',(req, res) =>
         console.log("Error Logging Out");
       };
     }));
+    res.redirect('/login');
 });
 app.post("/registerManager", async (req, res) => 
 {
@@ -93,6 +108,7 @@ app.post("/registerManager", async (req, res) =>
   {
     const hash = await bcrypt.hash(req.body.password, 10); 
     await db.none("INSERT INTO users (username, password, firstname, lastname, branch, manager) VALUES ($1, $2, $3, $4, $5, $6)", [req.body.username, hash, req.body.firstname, req.body.lastname, req.body.branch, true]);
+    console.log("successfully inserted into the database");
     res.redirect("/login");
   } 
   catch (error) 
@@ -108,8 +124,9 @@ app.post("/registerEmployee", async (req, res) =>
 {
   try 
   {
-    const hash = await bcrypt.hash(req.body.password, 10); 
+    const hash = await bcrypt.hash(req.body.password, 10); // Correctly wait for the hash to complete
     await db.none("INSERT INTO users (username, password, firstname, lastname, branch, manager) VALUES ($1, $2, $3, $4, $5, $6)", [req.body.username, hash, req.body.firstname, req.body.lastname, req.body.branch, false]);
+    console.log("successfully inserted into the database");
     res.redirect("/login");
   } 
   catch (error) 
@@ -120,17 +137,45 @@ app.post("/registerEmployee", async (req, res) =>
   }
 });
 
-
-// Needs to handle which page to render using session vars
-app.get("/tasks", (req, res) => {
-  var isManager = true;
-
-  if (isManager) {
-    res.render("./pages/managerTasks");
-  } else {
-    res.render("./pages/employeeTasks");
+app.post('/login', async(req, res) =>
+{
+  try
+  {
+    console.log(req.body.username);
+    console.log('SELECT * FROM users WHERE username = $1;');
+    const user = await db.one('SELECT * FROM users WHERE username = $1;', [req.body.username]);
+    const match = await bcrypt.compare(req.body.password, user.password); 
+    if (match & req.body.manager) 
+    {
+      req.session.user = user;
+      req.session.save();
+      res.redirect("/managerTasks"); 
+    }
+    else if(match & !req.body.manager)
+    {
+      req.session.user = user;
+      req.session.save();
+      res.redirect('/employeeTasks');
+    };
+     return res.render('pages/login', {message: 'incorrect user or password', error: true});
   }
+  catch (error)
+  {
+    console.log(error);
+    res.render("pages/login", {message: 'user not found', error: true});
+  };
 });
+// Authentication Middleware.
+const auth = (req, res, next) => 
+{
+  if (!req.session.user) {
+    // Default to login page.
+    return res.redirect('/login');
+  }
+  next();
+};
+
+
 
 app.get("/login", (req, res) => {
   res.render("./pages/login");
