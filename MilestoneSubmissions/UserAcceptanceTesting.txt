@@ -1,0 +1,25 @@
+Feature 1: Assign an employee a task
+    Test Cases:
+        1. Task must have all required boxes filled by the manager.
+        2. All required boxes must be valid like date/time ect.
+        3. Task must show up in employee task list.
+        4. When employee updates the status this must reflect on the managers end.
+    Test Data:
+        1. Task validated and added to employee DB.
+        2. Updated task but be updated in task DB.
+Feature 2: Live Chat
+    Test Cases:
+        1. Employee must be able to access and send messages in chat box.
+        2. Manager Must be able to recive messages from the employee.
+        3. Manager must be able to respond to the emplyee.
+    Test Data: 
+        1. Message must be added to message DB by both employee and manager.
+        2. Both employee and manger must be able to see updated messages.
+Feature 3: Completed Task
+    Test Cases:
+        1. Once a task is marked as complete by the emplyee the manager must be notified
+        2. The manger must be able to see a list of completed and uncompleted task by each employee.
+    Test Data:
+        1. Manager must have acess to complete task DB and in Progress DB for the employee with the orginization
+
+
