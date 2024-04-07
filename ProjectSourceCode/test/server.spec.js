@@ -31,4 +31,47 @@ describe("Server!", () => {
 
 // *********************** TODO: WRITE 2 UNIT TESTCASES **************************
 
-// ********************************************************************************
+describe('Testing Add manager API', () => {
+  it('Registers a new manager successfully', done => {
+    chai
+      .request(server)
+      .post('/registerManager')
+      .send({username: 'test0', password: 'test0', confirmpassword: 'test0', firstname: 'test0', lastname: 'test0', branch: 'test0', manager:'manager0'})
+      .end((err, res) => {
+        expect(err).to.be.null;
+        expect(res).to.have.status(200);
+        expect(res.body.message).to.equals("Test0 Added!");
+        done();
+      });
+  });
+});
+
+describe('Testing Adding Invalid manager API', () => {
+  it('Checks Password matching Functionality', done => {
+    chai
+      .request(server)
+      .post('/registerManager')
+      .send({username: 'test1', password: 'test1', confirmpassword: 'test', firstname: 'test1', lastname: 'test1', branch: 'test1', manager:'manager0'})
+      .end((err, res) => {
+        expect(err).to.be.null;
+        expect(res).to.have.status(400);
+        expect(res.body.message).to.equals("Passwords do not match");
+        done();
+      });
+  });
+});
+
+describe('Testing Adding already added manager API', () => {
+  it('Checks User existance Functionality', done => {
+    chai
+      .request(server)
+      .post('/registerManager')
+      .send({username: 'test0', password: 'test0', confirmpassword: 'test0', firstname: 'test0', lastname: 'test0', branch: 'test0', manager:'manager0'})
+      .end((err, res) => {
+        expect(err).to.be.null;
+        expect(res).to.have.status(400);
+        expect(res.body.message).to.equals("Username taken");
+        done();
+      });
+  });
+});

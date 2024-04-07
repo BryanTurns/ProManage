@@ -128,7 +128,7 @@ app.post("/logout", (req, res) => {
 app.post("/registerManager", async (req, res) => {
   try {
     if (req.body.password != req.body.confirmpassword) {
-      return res.render("pages/registerManager", {
+      return res.status(400).json({
         message: "Passwords do not match",
         error: true,
       });
@@ -147,11 +147,11 @@ app.post("/registerManager", async (req, res) => {
       ]
     );
     console.log("successfully inserted into the database");
-    res.redirect("/login");
+    return res.json({ status: "success", message: "Test0 Added!", redirectTo: "/login"});
   } catch (error) {
     if (error.code === "23505") {
-      res.render("pages/registerManager", {
-        message: "username taken",
+      return res.status(400).json({
+        message: "Username taken",
         error: true,
       });
     } else {
@@ -162,7 +162,7 @@ app.post("/registerManager", async (req, res) => {
     }
     console.log("Failed to register manager.");
     console.error("Error inserting into Database", error);
-    res.redirect("/registerManager");
+    return res.json({status: "Invalid input", message: "Test0 Already Added!", redirectTo: "/registerManager"});
   }
 });
 
