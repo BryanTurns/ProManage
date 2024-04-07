@@ -32,7 +32,7 @@ describe("Server!", () => {
 // *********************** TODO: WRITE 2 UNIT TESTCASES **************************
 
 describe('Testing Add manager API', () => {
-  it('Registers a new manager successfully', done => {
+  it('Positive :Registers a new manager successfully', done => {
     chai
       .request(server)
       .post('/registerManager')
@@ -47,7 +47,7 @@ describe('Testing Add manager API', () => {
 });
 
 describe('Testing Adding Invalid manager API', () => {
-  it('Checks Password matching Functionality', done => {
+  it('Negitive : Checks Password matching Functionality', done => {
     chai
       .request(server)
       .post('/registerManager')
@@ -62,7 +62,7 @@ describe('Testing Adding Invalid manager API', () => {
 });
 
 describe('Testing Adding already added manager API', () => {
-  it('Checks User existance Functionality', done => {
+  it('Negitive : Checks User existance Functionality', done => {
     chai
       .request(server)
       .post('/registerManager')
@@ -75,3 +75,36 @@ describe('Testing Adding already added manager API', () => {
       });
   });
 });
+
+describe('Testing Valid Login Functionality', () => {
+  it('Positive : User is loged in', done => {
+    chai
+      .request(server)
+      .post('/login')
+      .send({username: 'test0', password: 'test0', manager: true})
+      .end((err, res) => {
+        console.log(res.body);
+        expect(err).to.be.null;
+        expect(res).to.have.status(200);
+        expect(res.body.message).to.equals("Logged in succesfully");
+        done();
+      });
+  });
+});
+
+describe('Testing Invalid Login Functionality', () => {
+  it('Negitive : User is unable to login since password is inncorect', done => {
+    chai
+      .request(server)
+      .post('/login')
+      .send({username: 'test0', password: 'incorrect', manager: true})
+      .end((err, res) => {
+        console.log(res.body);
+        expect(err).to.be.null;
+        expect(res).to.have.status(400);
+        expect(res.body.message).to.equals("Incorrect User/Password");
+        done();
+      });
+  });
+});
+

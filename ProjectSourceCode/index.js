@@ -216,16 +216,22 @@ app.post("/login", async (req, res) => {
     const match = await bcrypt.compare(req.body.password, user.password);
     if (match & req.body.manager) {
       req.session.user = user;
-      req.session.save();
-      res.redirect("/tasks");
+      req.session.save(() => {
+        res.status(200).json({
+          success: true, 
+          message: "Logged in succesfully", 
+          redirectTo: "/tasks"
+        });
+      });
     } else if (match & !req.body.manager) {
       req.session.user = user;
       req.session.save();
       res.redirect("/tasks");
     } else {
-      return res.render("pages/login", {
-        message: "incorrect user or password",
+      return res.status(400).json({
+        message: "Incorrect User/Password",
         error: true,
+        redirectTo: "pages/login"
       });
     }
   } catch (error) {
