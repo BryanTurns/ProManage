@@ -134,6 +134,7 @@ app.post("/registerManager", async (req, res) => {
         error: true,
       });
     }
+
     const hash = await bcrypt.hash(req.body.password, 10);
     await db.none(
       "INSERT INTO users (username, password, confirmpassword, firstname, lastname, branch, manager) VALUES ($1, $2, $3, $4, $5, $6, $7)",
@@ -148,7 +149,11 @@ app.post("/registerManager", async (req, res) => {
       ]
     );
     console.log("successfully inserted into the database");
-    return res.json({ status: "success", message: "Test0 Added!", redirectTo: "/login"});
+    return res.json({
+      status: "success",
+      message: "Test0 Added!",
+      redirectTo: "/login",
+    });
   } catch (error) {
     if (error.code === "23505") {
       return res.status(400).json({
@@ -163,7 +168,11 @@ app.post("/registerManager", async (req, res) => {
     }
     console.log("Failed to register manager.");
     console.error("Error inserting into Database", error);
-    return res.json({status: "Invalid input", message: "Test0 Already Added!", redirectTo: "/registerManager"});
+    return res.json({
+      status: "Invalid input",
+      message: "Test0 Already Added!",
+      redirectTo: "/registerManager",
+    });
   }
 });
 
@@ -173,6 +182,29 @@ app.post("/registerEmployee", async (req, res) => {
     if (req.body.password != req.body.confirmpassword) {
       return res.render("pages/registerEmployee", {
         message: "Passwords do not match",
+        error: true,
+      });
+    }
+    // Authenticate first, last, and username on backend
+    const upperLowerNumeric = /^[a-z\d]+$/i;
+    if (!upperLowerNumeric.test(req.body.username)) {
+      return res.render("pages/registerEmployee", {
+        message:
+          "Invalid format. Username must contain only numbers and letters.",
+        error: true,
+      });
+    }
+    if (!upperLowerNumeric.test(req.body.firstname)) {
+      return res.render("pages/registerEmployee", {
+        message:
+          "Invalid format. First name must contain only numbers and letters.",
+        error: true,
+      });
+    }
+    if (!upperLowerNumeric.test(req.body.lastname)) {
+      return res.render("pages/registerEmployee", {
+        message:
+          "Invalid format. First name must contain only numbers and letters.",
         error: true,
       });
     }
@@ -219,19 +251,20 @@ app.post("/login", async (req, res) => {
       req.session.user = user;
       req.session.save(() => {
         res.status(200).json({
-          success: true, 
-          message: "Logged in succesfully", 
-          redirectTo: "/tasks"
+          success: true,
+          message: "Logged in succesfully",
+          redirectTo: "/tasks",
         });
       });
     } else if (match && !req.body.manager) {
       req.session.user = user;
       req.session.save();
       res.redirect("/tasks");
-    } 
-    else 
-    {
-      res.render("pages/login", { message: "Inncorrect Password", error: true });
+    } else {
+      res.render("pages/login", {
+        message: "Inncorrect Password",
+        error: true,
+      });
     }
   } catch (error) {
     console.log(error);
