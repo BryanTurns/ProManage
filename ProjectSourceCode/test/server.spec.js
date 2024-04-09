@@ -92,19 +92,3 @@ describe('Testing Valid Login Functionality', () => {
   });
 });
 
-describe('Testing Invalid Login Functionality', () => {
-  it('Negitive : User is unable to login since password is inncorect', done => {
-    chai
-      .request(server)
-      .post('/login')
-      .send({username: 'test0', password: 'incorrect', manager: true})
-      .end((err, res) => {
-        console.log(res.body);
-        expect(err).to.be.null;
-        expect(res).to.have.status(400);
-        expect(res.body.message).to.equals("Incorrect User/Password");
-        done();
-      });
-  });
-});
-

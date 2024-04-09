@@ -7,6 +7,7 @@ const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt"); //  To hash passwords
 const session = require("express-session"); // To set the session object. To store or access session data, use the `req.session`, which is (generally) serialized as JSON by the store.
 const axios = require("axios");
+const { error } = require("console");
 
 const app = express();
 const PORT = process.env.WEB_PORT == undefined ? 3000 : process.env.WEB_PORT;
@@ -214,7 +215,7 @@ app.post("/login", async (req, res) => {
       req.body.username,
     ]);
     const match = await bcrypt.compare(req.body.password, user.password);
-    if (match & req.body.manager) {
+    if (match && req.body.manager) {
       req.session.user = user;
       req.session.save(() => {
         res.status(200).json({
@@ -223,16 +224,14 @@ app.post("/login", async (req, res) => {
           redirectTo: "/tasks"
         });
       });
-    } else if (match & !req.body.manager) {
+    } else if (match && !req.body.manager) {
       req.session.user = user;
       req.session.save();
       res.redirect("/tasks");
-    } else {
-      return res.status(400).json({
-        message: "Incorrect User/Password",
-        error: true,
-        redirectTo: "pages/login"
-      });
+    } 
+    else 
+    {
+      res.render("pages/login", { message: "Inncorrect Password", error: true });
     }
   } catch (error) {
     console.log(error);
