@@ -1,29 +1,99 @@
 <title>Manager Register</title>
-<div class="container" style="font-family: gill sans, sans-serif; max-width: 500px; margin: 50px auto; padding: 20px; background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 0.25rem;">
-    <h2 style="color: #007bff; text-align: center; font-weigth: 1000; margin-bottom: 20px;">Register As a Manager</h2>
-    <form action="/registerManager" method="POST" style="display: flex; flex-direction: column;">
-        <div style="text-align: center; margin-bottom: 20px;">
-            <img src="./images/managerhorizantal.png" style="max-width: 450px;">
-        </div>
-        <label for="username" style="margin-bottom: .5rem; color: #495057;">Username</label>
-        <input type="text" id="username" name="username" required style="margin-bottom: 1rem; padding: .375rem .75rem; border: 1px solid #ced4da; border-radius: 0.25rem;">
+<div
+  class="container"
+  style="font-family: gill sans, sans-serif; max-width: 500px; margin: 50px auto; padding: 20px; background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 0.25rem;"
+>
+  <h2
+    style="color: #007bff; text-align: center; font-weigth: 1000; margin-bottom: 20px;"
+  >Register As a Manager</h2>
+  <form
+    action="/registerManager"
+    method="POST"
+    style="display: flex; flex-direction: column;"
+  >
+    <div style="text-align: center; margin-bottom: 20px;">
+      <img src="./images/managerhorizantal.png" style="max-width: 450px;" />
+    </div>
+    <label
+      for="username"
+      style="margin-bottom: .5rem; color: #495057;"
+    >Username</label>
+    <input
+      type="text"
+      id="username"
+      name="username"
+      required
+      style="margin-bottom: 1rem; padding: .375rem .75rem; border: 1px solid #ced4da; border-radius: 0.25rem;"
+    />
 
-        <label for="firstname" style="margin-bottom: .5rem; color: #495057;">First Name</label>
-        <input type="text" id="firstname" name="firstname" required style="margin-bottom: 1rem; padding: .375rem .75rem; border: 1px solid #ced4da; border-radius: 0.25rem;">
+    <label for="firstname" style="margin-bottom: .5rem; color: #495057;">First
+      Name</label>
+    <input
+      type="text"
+      id="firstname"
+      name="firstname"
+      required
+      style="margin-bottom: 1rem; padding: .375rem .75rem; border: 1px solid #ced4da; border-radius: 0.25rem;"
+    />
 
-        <label for="lastname" style="margin-bottom: .5rem; color: #495057;">Last Name</label>
-        <input type="text" id="lastname" name="lastname" required style="margin-bottom: 1rem; padding: .375rem .75rem; border: 1px solid #ced4da; border-radius: 0.25rem;">
+    <label for="lastname" style="margin-bottom: .5rem; color: #495057;">Last
+      Name</label>
+    <input
+      type="text"
+      id="lastname"
+      name="lastname"
+      required
+      style="margin-bottom: 1rem; padding: .375rem .75rem; border: 1px solid #ced4da; border-radius: 0.25rem;"
+    />
 
-        <label for="password" style="margin-bottom: .5rem; color: #495057;">Password</label>
-        <input type="password" id="password" name="password" required style="margin-bottom: 1rem; padding: .375rem .75rem; border: 1px solid #ced4da; border-radius: 0.25rem;">
+    <label
+      for="password"
+      style="margin-bottom: .5rem; color: #495057;"
+    >Password</label>
+    <input
+      type="password"
+      id="password"
+      name="password"
+      required
+      style="margin-bottom: 1rem; padding: .375rem .75rem; border: 1px solid #ced4da; border-radius: 0.25rem;"
+    />
 
-        <label for="confirmpassword" style="margin-bottom: .5rem; color: #495057;">Confirm Password</label>
-        <input type="password" id="confirmpassword" name="confirmpassword" required style="margin-bottom: 1rem; padding: .375rem .75rem; border: 1px solid #ced4da; border-radius: 0.25rem;">
+    <label
+      for="confirmpassword"
+      style="margin-bottom: .5rem; color: #495057;"
+    >Confirm Password</label>
+    <input
+      type="password"
+      id="confirmpassword"
+      name="confirmpassword"
+      required
+      style="margin-bottom: 1rem; padding: .375rem .75rem; border: 1px solid #ced4da; border-radius: 0.25rem;"
+    />
 
-        <label for="branch" style="margin-bottom: .5rem; color: #495057;">Branch</label>
-        <input type="text" id="branch" name="branch" required style="margin-bottom: 1rem; padding: .375rem .75rem; border: 1px solid #ced4da; border-radius: 0.25rem;">
+    <label
+      for="branch"
+      style="margin-bottom: .5rem; color: #495057;"
+    >Branch</label>
+    <input
+      type="text"
+      id="branch"
+      name="branch"
+      required
+      style="margin-bottom: 1rem; padding: .375rem .75rem; border: 1px solid #ced4da; border-radius: 0.25rem;"
+    />
 
-        <button type="submit" style="padding: .375rem .75rem; color: #fff; background-color: #007bff; border-color: #007bff; border-radius: 0.25rem; cursor: pointer;">Register</button>
-        <p style="text-align: center;">Have an Account? <a href="/login" style="color: #007bff; text-decoration: none;">Login</a></p>
-    </form>
+    <button
+      id="submit"
+      type="submit"
+      style="padding: .375rem .75rem; color: #fff; background-color: #007bff; border-color: #007bff; border-radius: 0.25rem; cursor: pointer;"
+    >Register</button>
+    <p style="text-align: center;">Have an Account?
+      <a
+        href="/login"
+        style="color: #007bff; text-decoration: none;"
+      >Login</a></p>
+  </form>
 </div>
+<script src="./js/registerValidation.js">
+
+</script>

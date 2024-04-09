@@ -5,7 +5,3 @@
 body {
   width: 100%;
 }
-
-input:invalid {
-  background-color: lightpink;
-}
