@@ -85,13 +85,21 @@ app.get("/home", (req, res) => {
   res.redirect("/");
 });
 app.get("/tasks", async (req, res) => {
-  if (req.session.user.manager) {
-    const employeeList = await db.query("SELECT * FROM users WHERE branch = $1;", [req.session.user.branch]);
-    res.render("./pages/managerTasks", { auth:req.session.user, employees:employeeList.rows });
-  } else {
-    res.render("./pages/employeeTasks", { auth: req.session.user });
+  try {
+    if (req.session.user.manager) {
+      const employeeList = await db.query("SELECT * FROM users WHERE branch = $1;", [req.session.user.branch]);
+      console.log("SELECT * FROM users WHERE branch = 'test0';");
+      console.log(req.session.user.branch);
+      res.render("./pages/managerTasks", { auth: req.session.user, users: employeeList.rows });
+    } else {
+      res.render("./pages/employeeTasks", { auth: req.session.user });
+    }
+  } catch (error) {
+    console.error("Error handling tasks route:", error);
+    res.status(500).send("Internal Server Error");
   }
 });
+
 // app.get("/managerTasks", (req, res) => {
 //   res.render("./pages/managerTasks", { auth: req.session.user });
 // });

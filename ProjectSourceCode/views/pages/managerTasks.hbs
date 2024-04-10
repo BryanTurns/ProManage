@@ -28,7 +28,12 @@
   </div>
 </div>
 <div class="col-6">
-  Below is where a list of all employees will go
+  
+  {{#each users}}
+    <li class="list-group-item">{{this.username}} - {{this.firstname}} {{this.lastname}}</li>
+  {{/each}}
+
+  
 </div>
 
 
@@ -50,7 +55,7 @@
             <label for="recipient-name" class="col-form-label">Employee:</label>
               <select class="form-select">
                 <option selected>Select an Employee</option>
-                {{#each employees}}
+                {{#each users}}
                   <option value="{{this.username}}">{{this.firstname}} {{this.lastname}}</option>
                 {{/each}}
               </select>
