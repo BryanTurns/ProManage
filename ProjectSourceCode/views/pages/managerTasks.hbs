@@ -50,9 +50,9 @@
             <label for="recipient-name" class="col-form-label">Employee:</label>
               <select class="form-select">
                 <option selected>Select an Employee</option>
-                <option value="1">Employee One</option>
-                <option value="2">Employee Two</option>
-                <option value="3">Employee Three</option>
+                {{#each employees}}
+                  <option value="{{this.username}}">{{this.firstname}} {{this.lastname}}</option>
+                {{/each}}
               </select>
           </div>
           <div class="form-group">

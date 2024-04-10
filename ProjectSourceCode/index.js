@@ -84,9 +84,10 @@ app.get("/", (req, res) => {
 app.get("/home", (req, res) => {
   res.redirect("/");
 });
-app.get("/tasks", (req, res) => {
+app.get("/tasks", async (req, res) => {
   if (req.session.user.manager) {
-    res.render("./pages/managerTasks", { auth: req.session.user });
+    const employeeList = await db.query("SELECT * FROM users WHERE branch = $1;", [req.session.user.branch]);
+    res.render("./pages/managerTasks", { auth:req.session.user, employees:employeeList.rows });
   } else {
     res.render("./pages/employeeTasks", { auth: req.session.user });
   }
@@ -280,3 +281,4 @@ module.exports = app.listen(PORT, (error) => {
 app.get("/welcome", (req, res) => {
   res.json({ status: "success", message: "Welcome!" });
 });
+
