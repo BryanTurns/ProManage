@@ -129,12 +129,11 @@ app.post("/logout", (req, res) => {
 app.post("/registerManager", async (req, res) => {
   try {
     if (req.body.password != req.body.confirmpassword) {
-      return res.status(400).json({
+      return res.render("pages/registerManager", {
         message: "Passwords do not match",
         error: true,
       });
     }
-
     const hash = await bcrypt.hash(req.body.password, 10);
     await db.none(
       "INSERT INTO users (username, password, confirmpassword, firstname, lastname, branch, manager) VALUES ($1, $2, $3, $4, $5, $6, $7)",
@@ -149,14 +148,10 @@ app.post("/registerManager", async (req, res) => {
       ]
     );
     console.log("successfully inserted into the database");
-    return res.json({
-      status: "success",
-      message: "Test0 Added!",
-      redirectTo: "/login",
-    });
+    res.redirect("/login");
   } catch (error) {
     if (error.code === "23505") {
-      return res.status(400).json({
+      return res.render("pages/registerManager",{
         message: "Username taken",
         error: true,
       });
@@ -262,7 +257,7 @@ app.post("/login", async (req, res) => {
       res.redirect("/tasks");
     } else {
       res.render("pages/login", {
-        message: "Inncorrect Password",
+        message: "Incorrect Password",
         error: true,
       });
     }

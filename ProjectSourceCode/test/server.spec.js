@@ -40,7 +40,7 @@ describe('Testing Add manager API', () => {
       .end((err, res) => {
         expect(err).to.be.null;
         expect(res).to.have.status(200);
-        expect(res.body.message).to.equals("Test0 Added!");
+        expect(res).to.redirectTo(new RegExp('/login$'));
         done();
       });
   });
@@ -53,9 +53,8 @@ describe('Testing Adding Invalid manager API', () => {
       .post('/registerManager')
       .send({username: 'test1', password: 'test1', confirmpassword: 'test', firstname: 'test1', lastname: 'test1', branch: 'test1', manager:'manager0'})
       .end((err, res) => {
-        expect(err).to.be.null;
-        expect(res).to.have.status(400);
-        expect(res.body.message).to.equals("Passwords do not match");
+        expect(res).to.have.status(200);
+        expect(res.text).to.include("Passwords do not match");
         done();
       });
   });
@@ -69,8 +68,8 @@ describe('Testing Adding already added manager API', () => {
       .send({username: 'test0', password: 'test0', confirmpassword: 'test0', firstname: 'test0', lastname: 'test0', branch: 'test0', manager:'manager0'})
       .end((err, res) => {
         expect(err).to.be.null;
-        expect(res).to.have.status(400);
-        expect(res.body.message).to.equals("Username taken");
+        expect(res).to.have.status(200);
+        expect(res.text).to.include("Username taken");
         done();
       });
   });
@@ -92,3 +91,18 @@ describe('Testing Valid Login Functionality', () => {
   });
 });
 
+describe('Testing Invalid Login Functionality', () => {
+  it('Negitive : User is not logged in', done => {
+    chai
+      .request(server)
+      .post('/login')
+      .send({username: 'test0', password: 'test', manager: true})
+      .end((err, res) => {
+        console.log(res.body);
+        expect(err).to.be.null;
+        expect(res).to.have.status(200);
+        expect(res.text).to.include("Incorrect Password");
+        done();
+      });
+  });
+});
