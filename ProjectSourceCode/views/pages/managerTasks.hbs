@@ -11,9 +11,8 @@
     flex-direction: column;
     top: 50;
   }
-
 </style>
-
+<script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
 
 
 
@@ -27,13 +26,11 @@
     </div>
   </div>
 </div>
-<div class="col-6">
-  
+<div class="col-60">
+  Below is a list of employyees registered in your orginization:
   {{#each users}}
-    <li class="list-group-item">{{this.username}} - {{this.firstname}} {{this.lastname}}</li>
+    <li>{{this.firstname}} {{this.lastname}}</li>
   {{/each}}
-
-  
 </div>
 
 
