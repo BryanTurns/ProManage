@@ -289,6 +289,20 @@ module.exports = app.listen(PORT, (error) => {
   else console.log("Error occurred, server can't start", error);
 });
 
+app.post("/createEmployeeTask", async (req, res) => {
+  try
+  {
+    res.render("/tasks");
+    console.log(req.body.taskName)
+  }
+  catch (error) 
+  {
+    console.error("Error handling tasks route:", error);
+    res.status(500).send("Unknown Error");
+  }
+
+})
+
 app.get("/welcome", (req, res) => {
   res.json({ status: "success", message: "Welcome!" });
 });
