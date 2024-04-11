@@ -84,6 +84,9 @@ app.get("/", (req, res) => {
 app.get("/home", (req, res) => {
   res.redirect("/");
 });
+
+app.use(express.static(path.join(__dirname, "public")));
+
 app.get("/tasks", async (req, res) => {
   try {
     test = req.session.user.username
@@ -96,19 +99,13 @@ app.get("/tasks", async (req, res) => {
     res.render("./pages/managerTasks", {auth: req.session.user, users: users});
     } else {
       res.render("./pages/employeeTasks", { auth: req.session.user });
+    
     }
   } catch (error) {
     console.error("Error handling tasks route:", error);
     res.status(500).send("Unknown Error");
   }
 });
-
-// app.get("/managerTasks", (req, res) => {
-//   res.render("./pages/managerTasks", { auth: req.session.user });
-// });
-// app.get("/employeeTasks", (req, res) => {
-//   res.render("./pages/employeeTasks", { auth: req.session.user });
-// });
 
 app.get("/register", (req, res) => {
   res.render("./pages/register", { auth: req.session.user });
