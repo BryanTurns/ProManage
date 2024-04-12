@@ -1,119 +1,132 @@
 <title> Employee Tasks </title>
 <script src="/js/progressBarUpdater.js"></script>
 
-<style>
-  .container {
-    width: 33.33%; 
-    height: 90%; 
-    background-color: black;
-    float: left; 
-  }
-  .col-sm {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    top: 50;
-  }
-  
-</style>
+{{! <style>
+  .container { width: 33.33%; height: 90%; background-color: black; float: left;
+  } .col-sm { text-align: center; display: flex; flex-direction: column; top:
+  50; }
 
-
+</style> }}
 
 <div class="container">
-  <div class="row">
-    <div class="col-sm">
-      <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#view-task">View Task</button>
-      <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#update-status">Update Status</button>
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#speak-with-manager">Speak With Manager</button>
+  <div class="row h-full">
+    <div class="col-3" style="background-color:black">
+      <button
+        type="button"
+        class="btn btn-primary mb-2"
+        data-toggle="modal"
+        data-target="#update-status"
+      >Update Status</button>
+      <button
+        type="button"
+        class="btn btn-primary"
+        data-toggle="modal"
+        data-target="#speak-with-manager"
+      >Speak With Manager</button>
+    </div>
+    <div class="col-9">
+      <div>
+        <h4>Task Progress</h4>
+        <div class="progress">
+          <div
+            id="task-progress-bar bg-info"
+            class="progress-bar"
+            role="progressbar"
+            style="width: 0%;"
+            aria-valuenow="0"
+            aria-valuemin="10"
+            aria-valuemax="110"
+          >0%</div>
+        </div>
+        <div class="container">
+          {{#each tasks}}
+            <div class="row">
+              <div class="col-sm">{{this.taskname}}</div>
+              <div class="col-sm">{{this.taskdescription}}</div>
+              <div class="col-sm">
+                {{#if this.taskstatus}}
+                  {{this.taskstatus}}
+                {{else}}
+                  N/A
+                {{/if}}
+              </div>
+            </div>
+          {{/each}}
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
-<div class="col-6">
-  <div>
-    <h4>Task Progress</h4>
-  <div class="progress">
-    <div id="task-progress-bar bg-info" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="10" aria-valuemax="110">0%</div>
-  </div>
 
-  </div>
-  
-</div>
-
-
-
-
-<div class="modal fade" id="view-task" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="view-task-title">View Tasks</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="form-group">
-            display tasks here
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-
-<div class="modal fade" id="update-status" tabindex="-1" role="dialog" aria-hidden="true">
+<div
+  class="modal fade"
+  id="update-status"
+  tabindex="-1"
+  role="dialog"
+  aria-hidden="true"
+>
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="update-status-title">Update Status</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
         <form>
           <div class="form-group">
-              <label for="recipient-name" class="col-form-label">Task Name:</label>
-              <select class="form-select">
-                <option selected>Select a Task</option>
-                <option value="1">Task One</option>
-                <option value="2">Task Two</option>
-                <option value="3">Task Three</option>
-              </select>
+            <label for="recipient-name" class="col-form-label">Task Name:</label>
+            <select class="form-select">
+              <option selected>Select a Task</option>
+              {{#each tasks}}
+                <option>{{this.taskname}}</option>
+              {{/each}}
+            </select>
           </div>
-
 
           <div class="form-group">
             <label for="updated-task-status" class="col-form-label">Task Status:</label>
-            <input type="text" class="form-control" id="updated-task-status">
+            <input type="text" class="form-control" id="updated-task-status" />
           </div>
 
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Exit Changes</button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+        >Exit Changes</button>
         <button type="button" class="btn btn-primary">Update Status</button>
       </div>
     </div>
   </div>
 </div>
 
-
-
-
-
-<div class="modal fade" id="speak-with-manager" tabindex="-1" role="dialog" aria-hidden="true">
+<div
+  class="modal fade"
+  id="speak-with-manager"
+  tabindex="-1"
+  role="dialog"
+  aria-hidden="true"
+>
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="speak-with-manager-title">Speak With Manager</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
           <span aria-hidden="true">&times;</span>
         </button>
       </div>

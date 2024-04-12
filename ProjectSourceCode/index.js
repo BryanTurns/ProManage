@@ -104,7 +104,14 @@ app.get("/tasks", async (req, res) => {
         users: users,
       });
     } else {
-      res.render("./pages/employeeTasks", { auth: req.session.user });
+      const query = "SELECT * FROM tasks WHERE employeeName = $1";
+      console.log(req.session.user);
+      const tasks = await db.any(query, [req.session.user.username]);
+      console.log(tasks);
+      res.render("./pages/employeeTasks", {
+        auth: req.session.user,
+        tasks: tasks,
+      });
     }
   } catch (error) {
     console.error("Error handling tasks route:", error);
