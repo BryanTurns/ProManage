@@ -20,6 +20,8 @@ const hbs = handlebars.create({
   partialsDir: __dirname + "/views/partials",
 });
 
+app.use(express.json());
+
 app.engine("hbs", hbs.engine);
 app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "views"));
@@ -95,15 +97,14 @@ app.get("/tasks", async (req, res) => {
     if (req.session.user.manager) {
       const query = "SELECT * FROM users WHERE branch = $1";
       const users = await db.any(query, [req.session.user.branch]);
-      console.log(users);
-      console.log(req.session.user.branch);
+      // console.log(users);
+      // console.log(req.session.user.branch);
       res.render("./pages/managerTasks", {
         auth: req.session.user,
         users: users,
       });
     } else {
       res.render("./pages/employeeTasks", { auth: req.session.user });
-    
     }
   } catch (error) {
     console.error("Error handling tasks route:", error);
@@ -249,8 +250,6 @@ app.post("/registerEmployee", async (req, res) => {
 
 app.post("/login", async (req, res) => {
   try {
-    console.log(req.body.username);
-    console.log("SELECT * FROM users WHERE username = $1;");
     const user = await db.one("SELECT * FROM users WHERE username = $1;", [
       req.body.username,
     ]);
@@ -291,18 +290,29 @@ module.exports = app.listen(PORT, (error) => {
 });
 
 app.post("/createEmployeeTask", async (req, res) => {
-  try
-  {
-    res.render("/tasks");
-    console.log(req.body.taskName)
-  }
-  catch (error) 
-  {
+  try {
+    db.none(
+      "INSERT INTO tasks (employeeName, taskName, taskDescription) VALUES ($1, $2, $3)",
+      [req.body.employee, req.body.taskName, req.body.description]
+    )
+      .then((msg) => {
+        return res.render("./pages/managerTasks", {
+          message: "Task created!",
+          error: false,
+        });
+      })
+      .catch((err) => {
+        return res.render("./pages/managerTasks", {
+          message: `Unable to create task: ${err}`,
+          error: true,
+        });
+      });
+    return;
+  } catch (error) {
     console.error("Error handling tasks route:", error);
     res.status(500).send("Unknown Error");
   }
-
-})
+});
 
 app.get("/welcome", (req, res) => {
   res.json({ status: "success", message: "Welcome!" });

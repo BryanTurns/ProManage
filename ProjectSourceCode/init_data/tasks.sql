@@ -1,7 +1,7 @@
 CREATE TABLE Tasks (
-    TaskID SERIAL PRIMARY KEY,
-    EmployeeName VARCHAR(100),
-    TaskName VARCHAR(100),
-    TaskDescription TEXT,
-    TaskStatus VARCHAR(50)
+    taskID SERIAL PRIMARY KEY,
+    employeeName VARCHAR(100),
+    taskName VARCHAR(100),
+    taskDescription TEXT,
+    taskStatus VARCHAR(50)
 );
