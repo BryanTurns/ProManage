@@ -65,6 +65,7 @@ const auth = (req, res, next) => {
     // req.url != "/register" &&
     // req.url != "/register_manager" &&
     // req.url != "/register_employee"
+
     (req.url == "/tasks" ||
       req.url == "/logout" ||
       req.url == "/" ||
@@ -86,14 +87,17 @@ app.get("/home", (req, res) => {
 });
 app.get("/tasks", async (req, res) => {
   try {
-    test = req.session.user.username
+    test = req.session.user.username;
 
     if (req.session.user.manager) {
-    const query = 'SELECT * FROM users WHERE branch = $1';
-    const users = await db.any(query, [req.session.user.branch]);
-    console.log(users);
-    console.log(req.session.user.branch);
-    res.render("./pages/managerTasks", {auth: req.session.user, users: users});
+      const query = "SELECT * FROM users WHERE branch = $1";
+      const users = await db.any(query, [req.session.user.branch]);
+      console.log(users);
+      console.log(req.session.user.branch);
+      res.render("./pages/managerTasks", {
+        auth: req.session.user,
+        users: users,
+      });
     } else {
       res.render("./pages/employeeTasks", { auth: req.session.user });
     }
@@ -163,7 +167,7 @@ app.post("/registerManager", async (req, res) => {
     res.redirect("/login");
   } catch (error) {
     if (error.code === "23505") {
-      return res.render("pages/registerManager",{
+      return res.render("pages/registerManager", {
         message: "Username taken",
         error: true,
       });
@@ -292,4 +296,3 @@ module.exports = app.listen(PORT, (error) => {
 app.get("/welcome", (req, res) => {
   res.json({ status: "success", message: "Welcome!" });
 });
-
