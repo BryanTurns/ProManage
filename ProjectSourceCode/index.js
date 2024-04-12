@@ -105,9 +105,9 @@ app.get("/tasks", async (req, res) => {
       });
     } else {
       const query = "SELECT * FROM tasks WHERE employeeName = $1";
-      console.log(req.session.user);
+      // console.log(req.session.user);
       const tasks = await db.any(query, [req.session.user.username]);
-      console.log(tasks);
+      // console.log(tasks);
       res.render("./pages/employeeTasks", {
         auth: req.session.user,
         tasks: tasks,
@@ -199,6 +199,7 @@ app.post("/registerEmployee", async (req, res) => {
       return res.render("pages/registerEmployee", {
         message: "Passwords do not match",
         error: true,
+        auth: req.session.user,
       });
     }
     // Authenticate first, last, and username on backend
@@ -208,6 +209,7 @@ app.post("/registerEmployee", async (req, res) => {
         message:
           "Invalid format. Username must contain only numbers and letters.",
         error: true,
+        auth: req.session.user,
       });
     }
     if (!upperLowerNumeric.test(req.body.firstname)) {
@@ -215,6 +217,7 @@ app.post("/registerEmployee", async (req, res) => {
         message:
           "Invalid format. First name must contain only numbers and letters.",
         error: true,
+        auth: req.session.user,
       });
     }
     if (!upperLowerNumeric.test(req.body.lastname)) {
@@ -222,6 +225,7 @@ app.post("/registerEmployee", async (req, res) => {
         message:
           "Invalid format. First name must contain only numbers and letters.",
         error: true,
+        auth: req.session.user,
       });
     }
     await db.none(
@@ -243,11 +247,13 @@ app.post("/registerEmployee", async (req, res) => {
       res.render("pages/registerEmployee", {
         message: "username taken",
         error: true,
+        auth: req.session.user,
       });
     } else {
       res.render("pages/registerEmployee", {
         message: "an error has occurred",
         error: true,
+        auth: req.session.user,
       });
     }
     console.log("Failed to register employee.");
@@ -268,6 +274,7 @@ app.post("/login", async (req, res) => {
           success: true,
           message: "Logged in succesfully",
           redirectTo: "/tasks",
+          auth: req.session.user,
         });
       });
     } else if (match && !req.body.manager) {
@@ -278,6 +285,7 @@ app.post("/login", async (req, res) => {
       res.render("pages/login", {
         message: "Incorrect Password",
         error: true,
+        auth: req.session.user,
       });
     }
   } catch (error) {
@@ -299,19 +307,21 @@ module.exports = app.listen(PORT, (error) => {
 app.post("/createEmployeeTask", async (req, res) => {
   try {
     db.none(
-      "INSERT INTO tasks (employeeName, taskName, taskDescription) VALUES ($1, $2, $3)",
+      "INSERT INTO tasks (employeeName, taskName, taskDescription, complete) VALUES ($1, $2, $3, false)",
       [req.body.employee, req.body.taskName, req.body.description]
     )
       .then((msg) => {
         return res.render("./pages/managerTasks", {
           message: "Task created!",
           error: false,
+          auth: req.session.user,
         });
       })
       .catch((err) => {
         return res.render("./pages/managerTasks", {
           message: `Unable to create task: ${err}`,
           error: true,
+          auth: req.session.user,
         });
       });
     return;
@@ -321,6 +331,38 @@ app.post("/createEmployeeTask", async (req, res) => {
   }
 });
 
+app.post("/updateStatus", (req, res) => {
+  const query =
+    "UPDATE tasks SET taskstatus = $1, complete = $2 WHERE taskname = $3";
+  db.any(query, [req.body.status, req.body.complete, req.body.taskname])
+    .then(() => {
+      getTasks(req.session.user).then((tasks) => {
+        console.log(tasks);
+        return res.render("./pages/employeeTasks", {
+          tasks: tasks,
+          message: "Status updated!",
+          error: false,
+          auth: req.session.user,
+        });
+      });
+    })
+    .catch((err) => {
+      getTasks(req.session.user).then((tasks) => {
+        return res.render("./pages/employeeTasks", {
+          tasks: tasks,
+          message: err,
+          error: true,
+          auth: req.session.user,
+        });
+      });
+    });
+});
+
 app.get("/welcome", (req, res) => {
   res.json({ status: "success", message: "Welcome!" });
 });
+
+async function getTasks(user) {
+  const query = "SELECT * FROM tasks WHERE employeename = $1";
+  return await db.any(query, [user.username]);
+}

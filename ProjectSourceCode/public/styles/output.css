@@ -608,8 +608,20 @@ video {
   display: grid;
 }
 
+.hidden {
+  display: none;
+}
+
+.h-1\/6 {
+  height: 16.666667%;
+}
+
 .h-full {
   height: 100%;
+}
+
+.w-full {
+  width: 100%;
 }
 
 .flex-wrap {
@@ -629,6 +641,10 @@ video {
   background-color: rgb(191 219 254 / var(--tw-bg-opacity));
 }
 
+.p-2 {
+  padding: 0.5rem;
+}
+
 .px-4 {
   padding-left: 1rem;
   padding-right: 1rem;
@@ -637,6 +653,10 @@ video {
 .px-6 {
   padding-left: 1.5rem;
   padding-right: 1.5rem;
+}
+
+.font-bold {
+  font-weight: 700;
 }
 
 .transition {

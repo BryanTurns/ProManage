@@ -3,5 +3,6 @@ CREATE TABLE Tasks (
     employeeName VARCHAR(100),
     taskName VARCHAR(100),
     taskDescription TEXT,
-    taskStatus VARCHAR(50)
+    taskStatus VARCHAR(50),
+    complete BOOLEAN 
 );

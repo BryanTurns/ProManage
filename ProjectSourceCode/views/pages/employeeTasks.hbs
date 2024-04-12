@@ -8,8 +8,8 @@
 
 </style> }}
 
-<div class="container">
-  <div class="row h-full">
+<div class="container-fluid">
+  <div class="row h-full w-full">
     <div class="col-3" style="background-color:black">
       <button
         type="button"
@@ -39,17 +39,33 @@
           >0%</div>
         </div>
         <div class="container">
+          <div class="row font-bold">
+            <div class="col-sm">Task</div>
+            <div class="col-sm">Description</div>
+            <div class="col-sm">Status</div>
+            <div class="col-2">Update Task</div>
+          </div>
           {{#each tasks}}
-            <div class="row">
-              <div class="col-sm">{{this.taskname}}</div>
-              <div class="col-sm">{{this.taskdescription}}</div>
-              <div class="col-sm">
+            {{#if this.complete}}
+            <div class="row h-1/6 p-2" style="background-color:palegreen">
+            {{else}}
+            <div class="row h-1/6 p-2" style="background-color: lightpink">
+            {{/if}}
+              <div class="col-sm" style="overflow:auto;max-height:100%">{{this.taskname}}</div>
+              <div class="col-sm" style="overflow:auto;max-height:100%">{{this.taskdescription}}</div>
+              <div class="col-sm" style="overflow:auto;max-height:100%">
                 {{#if this.taskstatus}}
                   {{this.taskstatus}}
                 {{else}}
                   N/A
                 {{/if}}
               </div>
+              <div class="col-2 p-2" onclick="testfunc('{{this.taskname}}', '{{this.taskstatus}}', '{{this.complete}}')"><button
+        type="button"
+        class="btn btn-primary "
+        data-toggle="modal"
+        data-target="#update-status"
+      >Update Status</button></div>
             </div>
           {{/each}}
         </div>
@@ -79,33 +95,31 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-        <form>
-          <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Task Name:</label>
-            <select class="form-select">
-              <option selected>Select a Task</option>
-              {{#each tasks}}
-                <option>{{this.taskname}}</option>
-              {{/each}}
-            </select>
-          </div>
-
+      
+        <form action="/updateStatus" method="POST">
+        <div class="modal-body">
+          <input hidden id="taskname" name="taskname" value=""> 
           <div class="form-group">
             <label for="updated-task-status" class="col-form-label">Task Status:</label>
-            <input type="text" class="form-control" id="updated-task-status" />
+            <input type="text" class="form-control" name="status" id="updated-task-status" />
           </div>
-
-        </form>
-      </div>
-      <div class="modal-footer">
+          <div class="form-check">
+            
+            <input type="checkbox" id="complete" name="complete" class="form-check-input"/>
+            <label for="complete" class="form-check-label">Completed?</label>
+          </div>
+        </div>
+          <div class="modal-footer">
         <button
           type="button"
           class="btn btn-secondary"
           data-dismiss="modal"
         >Exit Changes</button>
-        <button type="button" class="btn btn-primary">Update Status</button>
+        <button type="submit" class="btn btn-primary">Update Status</button>
       </div>
+        </form>
+      
+      
     </div>
   </div>
 </div>
@@ -142,3 +156,4 @@
     </div>
   </div>
 </div>
+<script src="/js/update_tasks.js"></script>
