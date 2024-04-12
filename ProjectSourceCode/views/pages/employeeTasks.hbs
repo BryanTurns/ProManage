@@ -1,7 +1,10 @@
+<title> Employee Tasks </title>
+<script src="/js/progressBarUpdater.js"></script>
+
 <style>
   .container {
     width: 33.33%; 
-    height: 100vh; 
+    height: 90%; 
     background-color: black;
     float: left; 
   }
@@ -11,6 +14,7 @@
     flex-direction: column;
     top: 50;
   }
+  
 </style>
 
 
@@ -25,7 +29,14 @@
   </div>
 </div>
 <div class="col-6">
-  Progress Bar here
+  <div>
+    <h4>Task Progress</h4>
+  <div class="progress">
+    <div id="task-progress-bar bg-info" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="10" aria-valuemax="110">0%</div>
+  </div>
+
+  </div>
+  
 </div>
 
 
@@ -86,7 +97,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Disguard Changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Exit Changes</button>
         <button type="button" class="btn btn-primary">Update Status</button>
       </div>
     </div>
@@ -109,7 +120,7 @@
       <div class="modal-body">
         <form>
           <div class="form-group">
-            contact manager
+            Contact Manager
           </div>
         </form>
       </div>
