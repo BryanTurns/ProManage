@@ -1,3 +1,4 @@
+
 <title> Manager Tasks </title>
 <style>
   .container { width: 33.33%; height: 90%; background-color: black; float: left;
@@ -128,7 +129,7 @@
         <form>
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">Employee:</label>
-            <select class="form-select">
+            <select class="form-select" id="employeeSelect">
               <option selected>Select an Employee</option>
               {{#each users}}
                 <option value="{{this.username}}">{{this.firstname}}
@@ -137,12 +138,9 @@
             </select>
           </div>
           <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Task Name:</label>
-            <select class="form-select">
-              <option selected>Select a Task</option>
-              <option value="1">Task One</option>
-              <option value="2">Task Two</option>
-              <option value="3">Task Three</option>
+            <label for="taskSelect" class="col-form-label">Task Name:</label>
+            <select class="form-select" id="taskSelect">
+              <option selected>Please Select an employee!</option>
             </select>
           </div>
           <div class="form-group">
@@ -184,11 +182,11 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" id="delete-task">
         <form>
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">Employee:</label>
-            <select class="form-select">
+            <select class="form-select" id="employeeSelect">
               <option selected>Select an Employee</option>
               {{#each users}}
                 <option value="{{this.username}}">{{this.firstname}}
@@ -197,12 +195,9 @@
             </select>
           </div>
           <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Task Name:</label>
-            <select class="form-select">
-              <option selected>Select a Task</option>
-              <option value="1">Task One</option>
-              <option value="2">Task Two</option>
-              <option value="3">Task Three</option>
+            <label for="taskSelect" class="col-form-label">Task Name:</label>
+            <select class="form-select" id="taskSelect">
+              <option selected>Please Select an employee!</option>
             </select>
           </div>
         </form>
@@ -218,3 +213,26 @@
     </div>
   </div>
 </div>
+
+<script>
+  document.getElementById('employeeSelect').addEventListener('change', function() {
+    const username = this.value;
+    fetch(`/getListofEmployeeTasks?username=${(username)}`)
+    .then(response => response.json())
+    .then(tasks => {
+      const taskSelect = document.getElementById('taskSelect');
+      taskSelect.innerHTML = '';  //This clears the original Slelction
+      if (tasks.length === 0) 
+      {
+         taskSelect.innerHTML = '<option>There are no tasks available</option>';
+      } 
+      else 
+      {
+        tasks.forEach(task => {
+          const option = new Option(task.taskname, task.taskid);
+          taskSelect.add(option);
+        });
+      }
+    })
+  });
+</script>

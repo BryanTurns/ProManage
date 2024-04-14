@@ -356,6 +356,27 @@ app.post("/updateStatus", async (req, res) => {
   }
 });
 
+app.get("/getListofEmployeeTasks", async (req, res) => {
+  const username = req.query.username;
+  if(!username){
+    return res.status(400).send("Please select an employee");
+  }
+  try
+  {
+    const tasks = await db.any("SELECT taskid, taskname FROM tasks WHERE employeename = $1", [username]);
+    res.json(tasks);
+    console.log("Tasks fetched:", tasks);
+  }
+  catch (error)
+  {
+    console.error("Could not get tasks", error);
+    res.status(500).send("Unknown Error");
+  }
+});
+
+
+
+
 app.get("/welcome", (req, res) => {
   res.json({ status: "success", message: "Welcome!" });
 });
@@ -364,3 +385,7 @@ async function getTasks(user) {
   const query = "SELECT * FROM tasks WHERE employeename = $1";
   return await db.any(query, [user.username]);
 }
+
+
+
+
