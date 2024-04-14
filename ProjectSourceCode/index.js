@@ -307,7 +307,7 @@ module.exports = app.listen(PORT, (error) => {
 app.post("/createEmployeeTask", async (req, res) => {
   try {
     db.none(
-      "INSERT INTO tasks (employeeName, taskName, taskDescription, complete) VALUES ($1, $2, $3, false)",
+      "INSERT INTO tasks (employeeName, taskName, taskDescription, taskstatus) VALUES ($1, $2, $3, false)",
       [req.body.employee, req.body.taskName, req.body.description]
     )
       .then((msg) => {
@@ -331,31 +331,29 @@ app.post("/createEmployeeTask", async (req, res) => {
   }
 });
 
-app.post("/updateStatus", (req, res) => {
-  const query =
-    "UPDATE tasks SET taskstatus = $1, complete = $2 WHERE taskname = $3";
-  db.any(query, [req.body.status, req.body.complete, req.body.taskname])
-    .then(() => {
-      getTasks(req.session.user).then((tasks) => {
-        console.log(tasks);
-        return res.render("./pages/employeeTasks", {
-          tasks: tasks,
-          message: "Status updated!",
-          error: false,
-          auth: req.session.user,
-        });
-      });
-    })
-    .catch((err) => {
-      getTasks(req.session.user).then((tasks) => {
-        return res.render("./pages/employeeTasks", {
-          tasks: tasks,
-          message: err,
-          error: true,
-          auth: req.session.user,
-        });
-      });
+app.post("/updateStatus", async (req, res) => {
+  const query = "UPDATE tasks SET taskstatus = $1 WHERE taskname = $2";
+  try
+  {
+    await db.none(query, [req.body.status, req.body.taskname])
+    const tasks = await getTasks(req.session.user);
+    res.render("./pages/employeeTasks", {
+      tasks: tasks,
+      message: "Status updated!",
+      error: false,
+      auth: req.session.user,
     });
+  }
+  catch (err) {
+    console.error("Issue updating task status:", err);
+      const tasks = await getTasks(req.session.user);
+      res.render("./pages/employeeTasks", {
+        tasks: tasks,
+        message: `Error: ${err.message}`,  // It's good to format error messages.
+        error: true,
+        auth: req.session.user,
+      });
+  }
 });
 
 app.get("/welcome", (req, res) => {
