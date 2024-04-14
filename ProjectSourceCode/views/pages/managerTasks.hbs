@@ -182,11 +182,11 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body" id="delete-task">
+      <div class="modal-body">
         <form>
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">Employee:</label>
-            <select class="form-select" id="employeeSelect">
+            <select class="form-select" id="deleteEmployeeSelect">
               <option selected>Select an Employee</option>
               {{#each users}}
                 <option value="{{this.username}}">{{this.firstname}}
@@ -195,8 +195,8 @@
             </select>
           </div>
           <div class="form-group">
-            <label for="taskSelect" class="col-form-label">Task Name:</label>
-            <select class="form-select" id="taskSelect">
+            <label for="deleteTaskSelect" class="col-form-label">Task Name:</label>
+            <select class="form-select" id="deleteTaskSelect">
               <option selected>Please Select an employee!</option>
             </select>
           </div>
@@ -221,6 +221,26 @@
     .then(response => response.json())
     .then(tasks => {
       const taskSelect = document.getElementById('taskSelect');
+      taskSelect.innerHTML = '';  //This clears the original Slelction
+      if (tasks.length === 0) 
+      {
+         taskSelect.innerHTML = '<option>There are no tasks available</option>';
+      } 
+      else 
+      {
+        tasks.forEach(task => {
+          const option = new Option(task.taskname, task.taskid);
+          taskSelect.add(option);
+        });
+      }
+    })
+  });
+  document.getElementById('deleteEmployeeSelect').addEventListener('change', function() {
+    const username = this.value;
+    fetch(`/getListofEmployeeTasks?username=${(username)}`)
+    .then(response => response.json())
+    .then(tasks => {
+      const taskSelect = document.getElementById('deleteTaskSelect');
       taskSelect.innerHTML = '';  //This clears the original Slelction
       if (tasks.length === 0) 
       {
