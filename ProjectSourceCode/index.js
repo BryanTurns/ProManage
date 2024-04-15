@@ -99,9 +99,11 @@ app.get("/tasks", async (req, res) => {
       const users = await db.any(query, [req.session.user.branch]);
       // console.log(users);
       // console.log(req.session.user.branch);
+      const message = req.query.message;
       res.render("./pages/managerTasks", {
         auth: req.session.user,
         users: users,
+        message: message, 
       });
     } else {
       const query = "SELECT * FROM tasks WHERE employeeName = $1";
