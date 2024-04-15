@@ -9,6 +9,7 @@
   src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"
 ></script>
 
+
 <div class="container">
   <div class="row" color="red">
     <div class="col-sm">
@@ -105,31 +106,31 @@
   </div>
 </div>
 
-<div
-  class="modal fade"
-  id="update-task"
-  tabindex="-1"
-  role="dialog"
-  aria-hidden="true"
->
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="update-event-title">Update Task</h5>
-        <button
-          type="button"
-          class="close"
-          data-dismiss="modal"
-          aria-label="Close"
-        >
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form>
+<form id="updateTaskForm" action="/updateTask" method="post">
+  <div
+    class="modal fade"
+    id="update-task"
+    tabindex="-1"
+    role="dialog"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="update-event-title">Update Task</h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">Employee:</label>
-            <select class="form-select" id="employeeSelect">
+            <select class="form-select" id="employeeSelect" name="employeeUsername">
               <option selected>Select an Employee</option>
               {{#each users}}
                 <option value="{{this.username}}">{{this.firstname}}
@@ -139,54 +140,57 @@
           </div>
           <div class="form-group">
             <label for="taskSelect" class="col-form-label">Task Name:</label>
-            <select class="form-select" id="taskSelect">
+            <select class="form-select" id="taskSelect" name="taskName">
               <option selected>Please Select an employee!</option>
             </select>
           </div>
           <div class="form-group">
-            <label for="message-text" class="col-form-label">Update Task
-              Description:</label>
-            <textarea class="form-control" id="message-text"></textarea>
+            <label for="taskDescriptionDisplay" class="col-form-label"> Current Task Description:</label>
+            <textarea class="form-control" id="taskDescriptionDisplay" readonly></textarea>
           </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button
-          type="button"
-          class="btn btn-secondary"
-          data-dismiss="modal"
-        >Disguard</button>
-        <button type="button" class="btn btn-primary">Update Task</button>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Update Task Description:</label>
+            <textarea class="form-control" id="updatedDescription" name="updatedDescription"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-dismiss="modal"
+          >Disguard</button>
+          <button type="submit" class="btn btn-primary">Update Task</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</form>
 
-<div
-  class="modal fade"
-  id="delete-task"
-  tabindex="-1"
-  role="dialog"
-  aria-hidden="true"
->
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="delete-event-title">Delete Task</h5>
-        <button
-          type="button"
-          class="close"
-          data-dismiss="modal"
-          aria-label="Close"
-        >
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form>
+<form id="deleteTaskFrom" action="/deleteTask" method="post">
+  <div
+    class="modal fade"
+    id="delete-task"
+    tabindex="-1"
+    role="dialog"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="delete-event-title">Delete Task</h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">Employee:</label>
-            <select class="form-select" id="deleteEmployeeSelect">
+            <select class="form-select" id="deleteEmployeeSelect" name="deleteEmployeeSelect">
               <option selected>Select an Employee</option>
               {{#each users}}
                 <option value="{{this.username}}">{{this.firstname}}
@@ -196,23 +200,27 @@
           </div>
           <div class="form-group">
             <label for="deleteTaskSelect" class="col-form-label">Task Name:</label>
-            <select class="form-select" id="deleteTaskSelect">
+            <select class="form-select" id="deleteTaskSelect" name="deleteTaskName">
               <option selected>Please Select an employee!</option>
             </select>
           </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button
-          type="button"
-          class="btn btn-secondary"
-          data-dismiss="modal"
-        >Disguard</button>
-        <button type="button" class="btn btn-danger">Delete Task</button>
+          <div class="form-group">
+            <label for="deleteTaskDescriptionDisplay" class="col-form-label"> Current Description:</label>
+            <textarea class="form-control" id="deleteTaskDescriptionDisplay" readonly></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-dismiss="modal"
+          >Disguard</button>
+          <button type="submit" class="btn btn-danger">Delete Task</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</form>
 
 <script>
   document.getElementById('employeeSelect').addEventListener('change', function() {
@@ -221,19 +229,29 @@
     .then(response => response.json())
     .then(tasks => {
       const taskSelect = document.getElementById('taskSelect');
+      const taskDescriptionDisplay = document.getElementById('taskDescriptionDisplay');
       taskSelect.innerHTML = '';  //This clears the original Slelction
+      taskDescriptionDisplay.value = '';
       if (tasks.length === 0) 
       {
-         taskSelect.innerHTML = '<option>There are no tasks available</option>';
+        taskSelect.innerHTML = '<option>There are no tasks available</option>';
       } 
       else 
       {
         tasks.forEach(task => {
           const option = new Option(task.taskname, task.taskid);
+          option.dataset.description = task.taskdescription;
           taskSelect.add(option);
         });
+        taskDescriptionDisplay.value=tasks[0].taskdescription;
       }
     })
+  });
+  document.getElementById("taskSelect").addEventListener('change', function()//Add a listiner for a change in description
+  {
+    const newSelected = this.options[this.selectedIndex];
+    const reDisplay = document.getElementById('taskDescriptionDisplay');
+    reDisplay.value = newSelected.dataset.description || 'There is no description for this task.';
   });
   document.getElementById('deleteEmployeeSelect').addEventListener('change', function() {
     const username = this.value;
@@ -241,7 +259,9 @@
     .then(response => response.json())
     .then(tasks => {
       const taskSelect = document.getElementById('deleteTaskSelect');
+      const deleteTaskDescriptionDisplay = document.getElementById('deleteTaskDescriptionDisplay');
       taskSelect.innerHTML = '';  //This clears the original Slelction
+      deleteTaskDescriptionDisplay.value = '';
       if (tasks.length === 0) 
       {
          taskSelect.innerHTML = '<option>There are no tasks available</option>';
@@ -250,9 +270,16 @@
       {
         tasks.forEach(task => {
           const option = new Option(task.taskname, task.taskid);
+          option.dataset.description = task.taskdescription;
           taskSelect.add(option);
         });
+        deleteTaskDescriptionDisplay.value=tasks[0].taskdescription;
       }
     })
+  });
+  document.getElementById("deleteTaskSelect").addEventListener('change', function() {
+    const newlySelected = this.options[this.selectedIndex];
+    const reDisplay = document.getElementById('deleteTaskDescriptionDisplay');
+    reDisplay.value = newlySelected.dataset.description || 'There is no description for this task.';
   });
 </script>

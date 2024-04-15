@@ -363,7 +363,7 @@ app.get("/getListofEmployeeTasks", async (req, res) => {
   }
   try
   {
-    const tasks = await db.any("SELECT taskid, taskname FROM tasks WHERE employeename = $1", [username]);
+    const tasks = await db.any("SELECT taskid, taskname,taskdescription FROM tasks WHERE employeename = $1", [username]);
     res.json(tasks);
     console.log("Tasks fetched:", tasks);
   }
@@ -373,8 +373,35 @@ app.get("/getListofEmployeeTasks", async (req, res) => {
     res.status(500).send("Unknown Error");
   }
 });
-
-
+app.post("/updateTask", async(req, res) =>{
+  const query = "UPDATE tasks SET taskdescription = $1 WHERE taskid = $2 AND employeename = $3";
+  console.log(req.body.updatedDescription, req.body.employeeUsername, req.body.taskName);
+  try
+  {
+    await db.none(query, [req.body.updatedDescription, req.body.taskName, req.body.employeeUsername]);
+    const tasks = await getTasks(req.session.user);
+    res.redirect('/tasks?message=Task updated successfully');
+  }
+  catch (error)
+  {
+    console.error("Could not get tasks", error);
+    res.status(500).send("Unknown Error");
+  }
+});
+app.post("/deleteTask", async (req, res) => {
+  const query = "DELETE FROM tasks WHERE taskid = $1 AND employeename = $2";
+  try
+  {
+    await db.none(query, [req.body.deleteTaskName, req.body.deleteEmployeeSelect]);
+    const tasks = await getTasks(req.session.user);
+    res.redirect('/tasks?message=Task deleted successfully');
+  }
+  catch (error)
+  {
+    console.error("Could Not Delete Task", error);
+    res.status(500).send("Unknown Error");
+  }
+})
 
 
 app.get("/welcome", (req, res) => {
