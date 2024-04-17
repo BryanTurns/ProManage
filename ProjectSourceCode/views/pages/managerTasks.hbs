@@ -15,17 +15,20 @@
     <div class="col-sm">
       <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#create-task">Create Task</button>
       <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#update-task">Update Task</button>
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#delete-task">Delete Task</button>
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#notify-organization">Notify Organization</button>
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#notify-employee">Notify Employee</button>
+      <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#delete-task">Delete Task</button>
+      <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#notify-organization">Notify Organization</button>
+      <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#notify-employee">Notify Employee</button>
     </div>
   </div>
 </div>
-<div class="col-60">
-  Below is a list of employyees registered in your orginization:
-  {{#each users}}
-    <li>{{this.firstname}} {{this.lastname}}</li>
-  {{/each}}
+<div>
+  <div class="list-group">
+    <h2>Orginization Employyee List:</h2>
+    
+    {{#each users}}
+      <button type="button" class="list-group-item list-group-item-action">{{this.firstname}} {{this.lastname}}</button>
+    {{/each}}
+  </div>
 </div>
 
 
