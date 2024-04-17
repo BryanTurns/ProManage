@@ -16,3 +16,19 @@ DataBase Scheme:
       One or two work on unit tests
       Sawyer does test cases
       Register API and other then login 
+
+04/10/2024
+      1. Confirmed test cases are working correctly and not braking code.
+      2. Notification System Make an alerts DB and displays it in handel bars and Manager Alerting the Employee -Owen 
+      3. Get Notification System SQL Done, Primaary ID, Message, Orginizations -Ian
+      4. Touch up HTML -Ian Owen
+      5. Sawyer and Bryan Work on Create Task and Update Task and Delete Task Routes
+      6. Trouble Shooting Stuff with Ian.
+
+04/17/2024
+      1. Ian- Touch up home page and ask Bryan about display button.
+      2. Sonia/Ian - Work on Home page images and descriptions.
+      3. Sayer/Bryan - Work on Employee Task Page 
+      4. Owen - 
+
+      
