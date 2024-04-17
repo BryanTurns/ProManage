@@ -28,13 +28,23 @@ app.set("views", path.join(__dirname, "views"));
 app.use(bodyParser.json()); // specify the usage of JSON for parsing request body.
 
 // database configuration
-const dbConfig = {
-  host: "db", // the database server
+// const dbConfig = {
+//   host: "db", // the database server
+//   port: process.env.DB_PORT, // the database port
+//   database: process.env.POSTGRES_DB, // the database name
+//   user: process.env.POSTGRES_USER, // the user account to connect with
+//   password: process.env.POSTGRES_PASSWORD, // the password of the user account
+// };
+// const db = pgp(dbConfig);
+
+const deployConfig = {
+  host: process.env.host, // the database server
   port: process.env.DB_PORT, // the database port
   database: process.env.POSTGRES_DB, // the database name
   user: process.env.POSTGRES_USER, // the user account to connect with
   password: process.env.POSTGRES_PASSWORD, // the password of the user account
 };
+
 const db = pgp(dbConfig);
 
 // test your database
