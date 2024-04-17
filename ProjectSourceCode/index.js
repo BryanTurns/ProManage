@@ -81,7 +81,7 @@ const auth = (req, res, next) => {
 // Authentication Required
 app.use(auth);
 
-app.get("/", (req, res) => {
+app.get("/home", (req, res) => {
   res.render("./pages/home", { auth: req.session.user });
 });
 app.get("/home", (req, res) => {
