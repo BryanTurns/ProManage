@@ -123,8 +123,16 @@ app.get("/tasks", async (req, res) => {
       // console.log(req.session.user);
       const tasks = await db.any(query, [req.session.user.username]);
       // console.log(tasks);
+      var completed = 0;
+      for (var i = 0; i < tasks.length; i++) {
+        console.log(tasks[i]);
+        if (tasks[i].complete) {
+          completed++;
+        }
+      }
       res.render("./pages/employeeTasks", {
         auth: req.session.user,
+        progress: completed / tasks.length,
         tasks: tasks,
       });
     }
@@ -326,10 +334,18 @@ app.post("/createEmployeeTask", async (req, res) => {
       [req.body.employee, req.body.taskName, req.body.description]
     )
       .then((msg) => {
-        return res.render("./pages/managerTasks", {
-          message: "Task created!",
-          error: false,
-          auth: req.session.user,
+        const query =
+          "SELECT * FROM users WHERE branch = $1 AND username != $2";
+        db.any(query, [
+          req.session.user.branch,
+          req.session.user.username,
+        ]).then((users) => {
+          return res.render("./pages/managerTasks", {
+            message: "Task created!",
+            users: users,
+            error: false,
+            auth: req.session.user,
+          });
         });
       })
       .catch((err) => {
@@ -433,6 +449,6 @@ app.get("/welcome", (req, res) => {
 
 async function getTasks(user) {
   const query = "SELECT * FROM tasks WHERE employeename = $1";
-  if (!user.username) return;
+  if (!user) return;
   return await db.any(query, [user.username]);
 }

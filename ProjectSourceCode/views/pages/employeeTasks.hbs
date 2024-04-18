@@ -1,5 +1,5 @@
 <title> Employee Tasks </title>
-<script src="/js/progressBarUpdater.js"></script>
+
 
 {{! <style>
   .container { width: 33.33%; height: 90%; background-color: black; float: left;
@@ -8,7 +8,7 @@
 
 </style> }}
 
-<div class="container-fluid">
+<div class="container-fluid" id="test">
   <div class="row h-full w-full">
     <div class="col-3" style="background-color:black">
       <button
@@ -25,11 +25,12 @@
       >Speak With Manager</button>
     </div>
     <div class="col-9">
-      <div>
+      <div  onload="loadProgress('{{progress}}')">
         <h4>Task Progress</h4>
         <div class="progress">
           <div
-            id="task-progress-bar bg-info"
+           
+            id="progress-bar"
             class="progress-bar"
             role="progressbar"
             style="width: 0%;"
@@ -157,3 +158,4 @@
   </div>
 </div>
 <script src="/js/update_tasks.js"></script>
+<script src="/js/progress.js" progress="{{progress}}"></script>
