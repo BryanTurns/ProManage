@@ -30,5 +30,9 @@ DataBase Scheme:
       2. Sonia/Ian - Work on Home page images and descriptions.
       3. Sayer/Bryan - Work on Employee Task Page 
       4. Owen - 
-
-      
+04/18/2024
+      1. Add a priority list 
+      2. Add a list of completed tasks
+      3. Add a deadline 
+      4. Choose a scrum call by Monday or Tuesday
+      5. Work on Style
