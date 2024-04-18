@@ -101,7 +101,6 @@ app.get("/home", (req, res) => {
 app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/tasks", async (req, res) => {
-  console.log(req.session.user);
   try {
     test = req.session.user.username;
 
@@ -348,9 +347,14 @@ app.post("/createEmployeeTask", async (req, res) => {
 });
 
 app.post("/updateStatus", async (req, res) => {
-  const query = "UPDATE tasks SET taskstatus = $1 WHERE taskname = $2";
+  const query =
+    "UPDATE tasks SET taskstatus = $1, complete = $2 WHERE taskname = $3";
   try {
-    await db.none(query, [req.body.status, req.body.taskname]);
+    await db.none(query, [
+      req.body.status,
+      req.body.complete,
+      req.body.taskname,
+    ]);
     const tasks = await getTasks(req.session.user);
     res.render("./pages/employeeTasks", {
       tasks: tasks,
@@ -429,5 +433,6 @@ app.get("/welcome", (req, res) => {
 
 async function getTasks(user) {
   const query = "SELECT * FROM tasks WHERE employeename = $1";
+  if (!user.username) return;
   return await db.any(query, [user.username]);
 }
