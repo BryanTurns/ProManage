@@ -101,19 +101,23 @@ app.get("/home", (req, res) => {
 app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/tasks", async (req, res) => {
+  console.log(req.session.user);
   try {
     test = req.session.user.username;
 
     if (req.session.user.manager) {
-      const query = "SELECT * FROM users WHERE branch = $1";
-      const users = await db.any(query, [req.session.user.branch]);
+      const query = "SELECT * FROM users WHERE branch = $1 AND username != $2";
+      const users = await db.any(query, [
+        req.session.user.branch,
+        req.session.user.username,
+      ]);
       // console.log(users);
       // console.log(req.session.user.branch);
       const message = req.query.message;
       res.render("./pages/managerTasks", {
         auth: req.session.user,
         users: users,
-        message: message, 
+        message: message,
       });
     } else {
       const query = "SELECT * FROM tasks WHERE employeeName = $1";
@@ -345,9 +349,8 @@ app.post("/createEmployeeTask", async (req, res) => {
 
 app.post("/updateStatus", async (req, res) => {
   const query = "UPDATE tasks SET taskstatus = $1 WHERE taskname = $2";
-  try
-  {
-    await db.none(query, [req.body.status, req.body.taskname])
+  try {
+    await db.none(query, [req.body.status, req.body.taskname]);
     const tasks = await getTasks(req.session.user);
     res.render("./pages/employeeTasks", {
       tasks: tasks,
@@ -355,66 +358,70 @@ app.post("/updateStatus", async (req, res) => {
       error: false,
       auth: req.session.user,
     });
-  }
-  catch (err) {
+  } catch (err) {
     console.error("Issue updating task status:", err);
-      const tasks = await getTasks(req.session.user);
-      res.render("./pages/employeeTasks", {
-        tasks: tasks,
-        message: `Error: ${err.message}`,  // It's good to format error messages.
-        error: true,
-        auth: req.session.user,
-      });
+    const tasks = await getTasks(req.session.user);
+    res.render("./pages/employeeTasks", {
+      tasks: tasks,
+      message: `Error: ${err.message}`, // It's good to format error messages.
+      error: true,
+      auth: req.session.user,
+    });
   }
 });
 
 app.get("/getListofEmployeeTasks", async (req, res) => {
   const username = req.query.username;
-  if(!username){
+  if (!username) {
     return res.status(400).send("Please select an employee");
   }
-  try
-  {
-    const tasks = await db.any("SELECT taskid, taskname,taskdescription FROM tasks WHERE employeename = $1", [username]);
+  try {
+    const tasks = await db.any(
+      "SELECT taskid, taskname,taskdescription FROM tasks WHERE employeename = $1",
+      [username]
+    );
     res.json(tasks);
     console.log("Tasks fetched:", tasks);
-  }
-  catch (error)
-  {
+  } catch (error) {
     console.error("Could not get tasks", error);
     res.status(500).send("Unknown Error");
   }
 });
-app.post("/updateTask", async(req, res) =>{
-  const query = "UPDATE tasks SET taskdescription = $1 WHERE taskid = $2 AND employeename = $3";
-  console.log(req.body.updatedDescription, req.body.employeeUsername, req.body.taskName);
-  try
-  {
-    await db.none(query, [req.body.updatedDescription, req.body.taskName, req.body.employeeUsername]);
+app.post("/updateTask", async (req, res) => {
+  const query =
+    "UPDATE tasks SET taskdescription = $1 WHERE taskid = $2 AND employeename = $3";
+  console.log(
+    req.body.updatedDescription,
+    req.body.employeeUsername,
+    req.body.taskName
+  );
+  try {
+    await db.none(query, [
+      req.body.updatedDescription,
+      req.body.taskName,
+      req.body.employeeUsername,
+    ]);
     const tasks = await getTasks(req.session.user);
-    res.redirect('/tasks?message=Task updated successfully');
-  }
-  catch (error)
-  {
+    res.redirect("/tasks?message=Task updated successfully");
+  } catch (error) {
     console.error("Could not get tasks", error);
     res.status(500).send("Unknown Error");
   }
 });
 app.post("/deleteTask", async (req, res) => {
   const query = "DELETE FROM tasks WHERE taskid = $1 AND employeename = $2";
-  try
-  {
-    await db.none(query, [req.body.deleteTaskName, req.body.deleteEmployeeSelect]);
+  try {
+    await db.none(query, [
+      req.body.deleteTaskName,
+      req.body.deleteEmployeeSelect,
+    ]);
     const tasks = await getTasks(req.session.user);
-    res.redirect('/tasks?message=Task deleted successfully');
-  }
-  catch (error)
-  {
+    res.redirect("/tasks?message=Task deleted successfully");
+  } catch (error) {
     console.error("Could Not Delete Task", error);
     res.status(500).send("Unknown Error");
   }
-})
-
+});
 
 app.get("/welcome", (req, res) => {
   res.json({ status: "success", message: "Welcome!" });
@@ -424,7 +431,3 @@ async function getTasks(user) {
   const query = "SELECT * FROM tasks WHERE employeename = $1";
   return await db.any(query, [user.username]);
 }
-
-
-
-
