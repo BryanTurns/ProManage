@@ -5,5 +5,5 @@ CREATE TABLE Tasks (
     taskDescription TEXT,
     taskStatus VARCHAR(50),
     complete BOOLEAN,
-    taskpriority SMALLINT, 
+    taskpriority SMALLINT
 );

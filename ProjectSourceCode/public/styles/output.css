@@ -600,6 +600,15 @@ video {
   border-width: 0;
 }
 
+.m-auto {
+  margin: auto;
+}
+
+.my-4 {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
 .mb-2 {
   margin-bottom: 0.5rem;
 }
@@ -626,14 +635,6 @@ video {
 
 .hidden {
   display: none;
-}
-
-.h-1\/6 {
-  height: 16.666667%;
-}
-
-.h-full {
-  height: 100%;
 }
 
 .w-full {
@@ -675,8 +676,31 @@ video {
   text-align: center;
 }
 
+.text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+.text-4xl {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+}
+
+.text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
 .font-bold {
   font-weight: 700;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.underline {
+  text-decoration-line: underline;
 }
 
 .transition {

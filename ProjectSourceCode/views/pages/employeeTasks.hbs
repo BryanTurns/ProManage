@@ -1,16 +1,10 @@
 <title> Employee Tasks </title>
 
 
-{{! <style>
-  .container { width: 33.33%; height: 90%; background-color: black; float: left;
-  } .col-sm { text-align: center; display: flex; flex-direction: column; top:
-  50; }
-
-</style> }}
-
+<h1 id="pagetitle" class="text-4xl font-bold underline text-center p-2">Incomplete Tasks</h1>
 <div class="container-fluid" id="test">
-  <div class="row h-full w-full">
-    <div class="col-3" style="background-color:black">
+  <div class="row w-full">
+    {{!-- <div class="col-3" style="background-color:black">
       <button
         type="button"
         class="btn btn-primary mb-2"
@@ -23,9 +17,9 @@
         data-toggle="modal"
         data-target="#speak-with-manager"
       >Speak With Manager</button>
-    </div>
-    <div class="col-9">
-      <div  onload="loadProgress('{{progress}}')">
+    </div> --}}
+    <div class="col">
+      {{!-- <div  onload="loadProgress('{{progress}}')">
         <h4>Task Progress</h4>
         <div class="progress">
           <div
@@ -38,24 +32,21 @@
             aria-valuemin="10"
             aria-valuemax="110"
           >0%</div>
-        </div>
-        <div class="container">
-          <div class="row font-bold">
-            <div class="col-sm">Task</div>
-            <div class="col-sm">Description</div>
-            <div class="col-sm">Status</div>
-            <div class="col-2">Update Task</div>
+        </div> --}}
+        <div style="" class="" ><div class="container py-3 px-5" style="" id="wholetable" >
+          <div class="row font-bold p-2">
+            <div class="col-sm text-2xl">Task</div>
+            <div class="col-sm text-2xl">Description</div>
+            <div class="col-sm text-2xl">Status</div>
+            <div class="col-2 text-2xl">Update Task</div>
           </div>
-          {{#each tasks}}
-            {{#if this.complete}}
-            <div class="row h-1/6 p-2" style="background-color:palegreen">
-            {{else}}
-            <div class="row h-1/6 p-2" style="background-color: lightpink">
-            {{/if}}
-              <div class="col-sm" style="overflow:auto;max-height:100%">{{this.taskname}}</div>
+          <div id="tasktable"></div>
+          {{!-- {{#each tasks}}
+          <div class="row">
+              <div class="col-sm " style="overflow:auto;max-height:100%">{{this.taskname}}</div>
               <div class="col-sm" style="overflow:auto;max-height:100%">{{this.taskdescription}}</div>
               <div class="col-sm" style="overflow:auto;max-height:100%">
-                {{#if this.taskstatus}}
+                {{#if this.taskstatus }}
                   {{this.taskstatus}}
                 {{else}}
                   N/A
@@ -68,13 +59,20 @@
         data-target="#update-status"
       >Update Status</button></div>
             </div>
-          {{/each}}
+          {{/each}} --}}
         </div>
-      </div>
+        
 
     </div>
   </div>
+  
 </div>
+<div class="row justify-content-center my-4">
+  <div><button class=" text-center btn btn-primary m-auto text-lg font-semibold p-2" id="viewbutton" onclick='switchview({{json tasks}})'>
+    Past Tasks
+  </button></div>
+
+  </div>
 
 <div
   class="modal fade"
@@ -119,21 +117,6 @@
         <button type="submit" class="btn btn-primary">Update Status</button>
       </div>
         </form>
-    </div>
-  </div>
-</div>
-
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-md-6">
-      <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#update-status">
-        Update Status
-      </button>
-    </div>
-    <div class="col-md-6">
-      <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#speak-with-manager">
-        Speak With Manager
-      </button>
     </div>
   </div>
 </div>
@@ -187,4 +170,5 @@
 </div>
 
 <script src="/js/update_tasks.js"></script>
-<script src="/js/progress.js" progress="{{progress}}"></script>
+{{!-- <script src="/js/progress.js" progress="{{progress}}"></script> --}}
+<script src="/js/switchtaskview.js" tasks="{{json tasks}}" onload='switchview({{json tasks}})'></script>

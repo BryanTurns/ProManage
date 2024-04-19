@@ -20,6 +20,10 @@ const hbs = handlebars.create({
   partialsDir: __dirname + "/views/partials",
 });
 
+Handlebars.registerHelper("json", function (obj) {
+  return new Handlebars.SafeString(JSON.stringify(obj));
+});
+
 app.use(express.json());
 
 app.engine("hbs", hbs.engine);
@@ -330,7 +334,7 @@ module.exports = app.listen(PORT, (error) => {
 app.post("/createEmployeeTask", async (req, res) => {
   try {
     db.none(
-      "INSERT INTO tasks (employeeName, taskName, taskDescription, taskstatus) VALUES ($1, $2, $3, false)",
+      "INSERT INTO tasks (employeeName, taskName, taskDescription, taskstatus) VALUES ($1, $2, $3, '')",
       [req.body.employee, req.body.taskName, req.body.description]
     )
       .then((msg) => {
@@ -368,7 +372,7 @@ app.post("/updateStatus", async (req, res) => {
   try {
     await db.none(query, [
       req.body.status,
-      req.body.complete,
+      req.body.complete ? req.body.complete : false,
       req.body.taskname,
     ]);
     const tasks = await getTasks(req.session.user);
