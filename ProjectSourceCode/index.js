@@ -114,6 +114,7 @@ app.get("/tasks", async (req, res) => {
         req.session.user.branch,
         req.session.user.username,
       ]);
+      
       // console.log(users);
       // console.log(req.session.user.branch);
       const message = req.query.message;
@@ -334,8 +335,8 @@ module.exports = app.listen(PORT, (error) => {
 app.post("/createEmployeeTask", async (req, res) => {
   try {
     db.none(
-      "INSERT INTO tasks (employeeName, taskName, taskDescription, taskstatus) VALUES ($1, $2, $3, '')",
-      [req.body.employee, req.body.taskName, req.body.description]
+      "INSERT INTO tasks (employeeName, taskName, taskDescription, taskstatus, taskpriority) VALUES ($1, $2, $3, '', $4)",
+      [req.body.employee, req.body.taskName, req.body.description, req.body.taskPriority]
     )
       .then((msg) => {
         const query =
@@ -401,7 +402,7 @@ app.get("/getListofEmployeeTasks", async (req, res) => {
   }
   try {
     const tasks = await db.any(
-      "SELECT taskid, taskname,taskdescription FROM tasks WHERE employeename = $1",
+      "SELECT taskid, taskname, taskdescription, taskpriority FROM tasks WHERE employeename = $1",
       [username]
     );
     res.json(tasks);
@@ -412,18 +413,19 @@ app.get("/getListofEmployeeTasks", async (req, res) => {
   }
 });
 app.post("/updateTask", async (req, res) => {
-  const query =
-    "UPDATE tasks SET taskdescription = $1 WHERE taskid = $2 AND employeename = $3";
+  const query = "UPDATE tasks SET taskdescription = $1, taskpriority = $4 WHERE taskid = $2 AND employeename = $3";
   console.log(
     req.body.updatedDescription,
     req.body.employeeUsername,
-    req.body.taskName
+    req.body.taskName,
+    req.body.taskPriorityName
   );
   try {
     await db.none(query, [
       req.body.updatedDescription,
       req.body.taskName,
       req.body.employeeUsername,
+      req.body.taskPriorityName,
     ]);
     const tasks = await getTasks(req.session.user);
     res.redirect("/tasks?message=Task updated successfully");

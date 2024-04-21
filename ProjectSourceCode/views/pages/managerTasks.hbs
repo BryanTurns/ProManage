@@ -26,7 +26,10 @@
     <h2>Organization Employee List:</h2>
     
     {{#each users}}
-      <button type="button" class="list-group-item list-group-item-action">{{this.firstname}} {{this.lastname}}</button>
+      <button type="button" class="list-group-item d-flex justify-content-between align-items-center">{{this.firstname}} {{this.lastname}}
+        <span class="badge badge-primary badge-pill">{{this.task_count}}</span>
+      </button>
+      
     {{/each}}
   </div>
 </div>
@@ -49,7 +52,7 @@
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">Employee:</label>
             <select class="form-select" name="employee" id="recipient-name">
-              <option selected>Select an Employee</option>
+              <option value = "" selected>Select an Employee</option>
               {{#each users}}
                 <option value="{{this.username}}">{{this.firstname}}
                   {{this.lastname}}</option>
@@ -117,12 +120,23 @@
         <div class="modal-body">
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">Employee:</label>
-            <select class="form-select" name="employee" id="recipient-name">
-              <option selected>Select an Employee</option>
+            <select class="form-select" name="employee" id="recipient-name0">
+              <option value = "" selected>Select an Employee</option>
               {{#each users}}
                 <option value="{{this.username}}">{{this.firstname}}
                   {{this.lastname}}</option>
               {{/each}}
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Task Priority:</label>
+            <select class="form-select" name="taskPriority" id="taskPriority">
+              <option selected> Select a Task Priority (High=5, Low=1)</option>
+              <option>5</option>
+              <option>4</option>
+              <option>3</option>
+              <option>2</option>
+              <option>1</option>
             </select>
           </div>
           <div class="form-group">
@@ -171,6 +185,12 @@
             </select>
           </div>
           <div class="form-group">
+            <label for="taskPriority" class="col-form-label">Update Task Priority: </label>
+            <select class="form-select" id="taskPrioritySelect" name="taskPriorityName">
+              <option selected>Select a task</option>
+            </select>
+          </div>
+          <div class="form-group">
             <label for="taskDescriptionDisplay" class="col-form-label"> Current Task Description:</label>
             <textarea class="form-control" id="taskDescriptionDisplay" readonly></textarea>
           </div>
@@ -202,7 +222,7 @@
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">Employee:</label>
             <select class="form-select" id="deleteEmployeeSelect" name="deleteEmployeeSelect">
-              <option selected>Select an Employee</option>
+              <option value="" selected >Select an Employee</option>
               {{#each users}}
                 <option value="{{this.username}}">{{this.firstname}}
                   {{this.lastname}}</option>
@@ -237,8 +257,10 @@
     .then(tasks => {
       const taskSelect = document.getElementById('taskSelect');
       const taskDescriptionDisplay = document.getElementById('taskDescriptionDisplay');
+      const taskPrioritySelect = document.getElementById('taskPrioritySelect');
       taskSelect.innerHTML = '';  //This clears the original Slelction
       taskDescriptionDisplay.value = '';
+      taskPriority.innerHTML = '';
       if (tasks.length === 0) 
       {
         taskSelect.innerHTML = '<option>There are no tasks available</option>';
@@ -246,20 +268,37 @@
       else 
       {
         tasks.forEach(task => {
-          const option = new Option(task.taskname, task.taskid);
+          const option = new Option(task.taskname, task.taskid); //Creates the options
           option.dataset.description = task.taskdescription;
+          option.dataset.priority = task.taskpriority.toString(); //Constant data types
           taskSelect.add(option);
         });
+        taskSelect.selectedIndex = 0; //This auto selscts teh first index
         taskDescriptionDisplay.value=tasks[0].taskdescription;
+        updatePrioritySelected(tasks[0].taskpriority.toString());
       }
     })
   });
-  document.getElementById("taskSelect").addEventListener('change', function()//Add a listiner for a change in description
+  
+  document.getElementById('taskSelect').addEventListener('change', function() //This handels changes in teh dropdown by the user
   {
-    const newSelected = this.options[this.selectedIndex];
-    const reDisplay = document.getElementById('taskDescriptionDisplay');
-    reDisplay.value = newSelected.dataset.description || 'There is no description for this task.';
+    const selectedTask = this.options[this.selectedIndex];
+    document.getElementById('taskDescriptionDisplay').value = selectedTask.dataset.description;
+    updatePrioritySelected(selectedTask.dataset.priority); // Update priority when task changes
   });
+
+  function updatePrioritySelected(priority) 
+  {
+    const priorityOptions = ['1','2', '3', '4', '5']; // Priority levels
+    const taskPrioritySelect = document.getElementById('taskPrioritySelect');
+    taskPrioritySelect.innerHTML = '';  // Clear the dropdown so we don't make double
+    priorityOptions.forEach(level => {
+      const option = new Option(level, level); //Sets the option a selected to match the current task priority
+      option.selected =(level === priority.toString()); 
+      taskPrioritySelect.add(option);
+    });
+  }
+
   document.getElementById('deleteEmployeeSelect').addEventListener('change', function() {
     const username = this.value;
     fetch(`/getListofEmployeeTasks?username=${(username)}`)
@@ -271,7 +310,7 @@
       deleteTaskDescriptionDisplay.value = '';
       if (tasks.length === 0) 
       {
-         taskSelect.innerHTML = '<option>There are no tasks available</option>';
+        taskSelect.innerHTML = '<option>There are no tasks available</option>';
       } 
       else 
       {
