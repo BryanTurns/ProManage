@@ -22,6 +22,13 @@
   </div>
 </div>
 <div>
+
+
+
+
+
+
+  
   <div class="list-group">
     <h2>Organization Employee List:</h2>
     {{#each users}}
@@ -279,6 +286,7 @@
       if (tasks.length === 0) 
       {
         taskSelect.innerHTML = '<option>There are no tasks available</option>';
+        taskPrioritySelect.innerHTML = '<option>There are no tasks available</option>';
       } 
       else 
       {
@@ -358,7 +366,7 @@
         if (tasks.length > 0)
         {
           tasks.forEach(task => {
-            content += `<p>Task: ${task.taskname}<br>Description: ${task.taskdescription}<br>Priority: ${task.taskpriority}</p>`;
+            content += `<p><b>Task Name: ${task.taskname}</b><br>Description: ${task.taskdescription}<br>Status: ${task.taskstatus}<br>Priority: ${task.taskpriority}</p>`;
           });
         }
         else

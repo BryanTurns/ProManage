@@ -124,8 +124,9 @@ app.get("/tasks", async (req, res) => {
         res.status(500).send("Internal Server Error");
       }
     } else {
-      const query = "SELECT * FROM tasks WHERE employeeName = $1";
+      const query = "SELECT * FROM tasks WHERE employeeName = $1 ORDER BY taskpriority DESC";
       // console.log(req.session.user);
+      const message = req.query.message;
       const tasks = await db.any(query, [req.session.user.username]);
       // console.log(tasks);
       var completed = 0;
@@ -138,6 +139,7 @@ app.get("/tasks", async (req, res) => {
       res.render("./pages/employeeTasks", {
         auth: req.session.user,
         progress: completed / tasks.length,
+        message: message,
         tasks: tasks,
       });
     }
@@ -335,7 +337,7 @@ module.exports = app.listen(PORT, (error) => {
 app.post("/createEmployeeTask", async (req, res) => {
   try {
     db.none(
-      "INSERT INTO tasks (employeeName, taskName, taskDescription, taskstatus, taskpriority) VALUES ($1, $2, $3, '', $4)",
+      "INSERT INTO tasks (employeeName, taskName, taskDescription, taskstatus, taskpriority) VALUES ($1, $2, $3, 'N/A', $4)",
       [req.body.employee, req.body.taskName, req.body.description, req.body.taskPriority]
     )
       .then((msg) => {
@@ -372,12 +374,13 @@ app.post("/updateStatus", async (req, res) => {
       req.body.taskname,
     ]);
     const tasks = await getTasks(req.session.user);
-    res.render("./pages/employeeTasks", {
-      tasks: tasks,
-      message: "Status updated!",
-      error: false,
-      auth: req.session.user,
-    });
+    res.redirect("/tasks?message=Status updated successfully");
+    // res.render("./pages/employeeTasks", {
+    //   tasks: tasks,
+    //   message: "Status updated!",
+    //   error: false,
+    //   auth: req.session.user,
+    // });
   } catch (err) {
     console.error("Issue updating task status:", err);
     const tasks = await getTasks(req.session.user);
@@ -397,7 +400,7 @@ app.get("/getListofEmployeeTasks", async (req, res) => {
   }
   try {
     const tasks = await db.any(
-      "SELECT taskid, taskname, taskdescription, taskpriority FROM tasks WHERE employeename = $1",
+      "SELECT * FROM tasks WHERE employeename = $1 ORDER BY taskpriority DESC",
       [username]
     );
     res.json(tasks);
