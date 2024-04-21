@@ -24,12 +24,27 @@
 <div>
   <div class="list-group">
     <h2>Organization Employee List:</h2>
-    
     {{#each users}}
-      <button type="button" class="list-group-item d-flex justify-content-between align-items-center">{{this.firstname}} {{this.lastname}}
-        <span class="badge badge-primary badge-pill">{{this.task_count}}</span>
-      </button>
-      
+      <button type="button" class="list-group-item d-flex justify-content-between align-items-center" data-toggle="modal" data-target="#userModal{{this.username}}" data-username="{{this.username}}">{{this.firstname}} {{this.lastname}} 
+        <span class="badge badge-primary badge-pill">{{this.task_count}}</span> 
+      </button> 
+      <div class="modal fade" id="userModal{{this.username}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">{{this.firstname}} {{this.lastname}} Task List:</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
     {{/each}}
   </div>
 </div>
@@ -299,7 +314,8 @@
     });
   }
 
-  document.getElementById('deleteEmployeeSelect').addEventListener('change', function() {
+  document.getElementById('deleteEmployeeSelect').addEventListener('change', function() 
+  {
     const username = this.value;
     fetch(`/getListofEmployeeTasks?username=${(username)}`)
     .then(response => response.json())
@@ -323,9 +339,35 @@
       }
     })
   });
-  document.getElementById("deleteTaskSelect").addEventListener('change', function() {
+  document.getElementById("deleteTaskSelect").addEventListener('change', function() 
+  {
     const newlySelected = this.options[this.selectedIndex];
     const reDisplay = document.getElementById('deleteTaskDescriptionDisplay');
     reDisplay.value = newlySelected.dataset.description || 'There is no description for this task.';
+  });
+  document.addEventListener("DOMContentLoaded", function()
+  {
+    {{#each users}}
+    $("#userModal{{this.username}}").on("show.bs.modal", function(event) //Show.bs is a function provided by Bootstrap that allows you to trigger before a modal is shown
+    {
+      var modal = $(this);
+      fetch(`/getListofEmployeeTasks?username={{this.username}}`)
+      .then(response => response.json())
+      .then(tasks => {
+        let content = "";
+        if (tasks.length > 0)
+        {
+          tasks.forEach(task => {
+            content += `<p>Task: ${task.taskname}<br>Description: ${task.taskdescription}<br>Priority: ${task.taskpriority}</p>`;
+          });
+        }
+        else
+        {
+          content = "<p>No tasks assigned.</p>"
+        }
+        modal.find('.modal-body').html(content);
+      });
+    });
+    {{/each}}
   });
 </script>

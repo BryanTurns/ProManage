@@ -109,20 +109,20 @@ app.get("/tasks", async (req, res) => {
     test = req.session.user.username;
 
     if (req.session.user.manager) {
-      const query = "SELECT * FROM users WHERE branch = $1 AND username != $2";
-      const users = await db.any(query, [
-        req.session.user.branch,
-        req.session.user.username,
-      ]);
-      
-      // console.log(users);
-      // console.log(req.session.user.branch);
-      const message = req.query.message;
-      res.render("./pages/managerTasks", {
-        auth: req.session.user,
-        users: users,
-        message: message,
-      });
+      try {
+        const query = "SELECT u.username, u.firstname, u.lastname, COUNT(t.taskid) AS task_count FROM users u LEFT JOIN tasks t ON t.employeename = u.username WHERE u.branch = $1 AND u.username != $2 GROUP BY u.username, u.firstname, u.lastname;";
+        //console.log("Branch:", req.session.user.branch, "Username: ", req.session.user.username);
+        const users = await db.any(query, [req.session.user.branch, req.session.user.username]);
+        const message = req.query.message;
+        res.render("./pages/managerTasks", {
+          auth: req.session.user,
+          users: users,
+          message: message,
+        });
+      } catch (error) {
+        console.error("Database error:", error);
+        res.status(500).send("Internal Server Error");
+      }
     } else {
       const query = "SELECT * FROM tasks WHERE employeeName = $1";
       // console.log(req.session.user);
@@ -345,12 +345,7 @@ app.post("/createEmployeeTask", async (req, res) => {
           req.session.user.branch,
           req.session.user.username,
         ]).then((users) => {
-          return res.render("./pages/managerTasks", {
-            message: "Task created!",
-            users: users,
-            error: false,
-            auth: req.session.user,
-          });
+          res.redirect("/tasks?message=Task created successfully");
         });
       })
       .catch((err) => {
