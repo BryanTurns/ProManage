@@ -33,7 +33,7 @@ app.use(bodyParser.json()); // specify the usage of JSON for parsing request bod
 
 //database configuration
 const dbConfig = {
-  host: "db", // the database server
+  host: process.env.host, // the database server
   port: process.env.DB_PORT, // the database port
   database: process.env.POSTGRES_DB, // the database name
   user: process.env.POSTGRES_USER, // the user account to connect with
