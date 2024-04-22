@@ -1,5 +1,7 @@
 <title> ProManage </title>
-
+<script
+  src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"
+></script>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -16,8 +18,15 @@
 
     <div class="grid-container">
       <div class="grid-item">
-        <h2>Updates and Announcements</h2>
-        <p>Content for item 1 goes here.</p>
+        <h2 style="text-align: center;">Updates and Announcements Display Below</h2>
+        {{#each alerts}}
+        <div class="alert alert-primary" role="alert">
+          {{this.message}}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        {{/each}}
       </div>
       <div class="grid-item"><!-- Bootstrap Carousel -->
         <div

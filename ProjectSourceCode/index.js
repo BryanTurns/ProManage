@@ -95,8 +95,18 @@ const auth = (req, res, next) => {
 // Authentication Required
 app.use(auth);
 
-app.get("/home", (req, res) => {
-  res.render("./pages/home", { auth: req.session.user });
+app.get("/home", async (req, res) => {
+  try{
+    const query2 = "SELECT * FROM alerts WHERE organization = $1;";
+    const alerts = await db.any(query2, [req.session.user.branch]);
+    res.render("./pages/home", { auth: req.session.user,  alerts: alerts,});
+  }
+  catch (error) {
+    console.error("Database error:", error);
+    res.status(500).send("Internal Server Error");
+  }
+  
+  
 });
 app.get("/home", (req, res) => {
   res.redirect("/");
@@ -107,7 +117,6 @@ app.use(express.static(path.join(__dirname, "public")));
 app.get("/tasks", async (req, res) => {
   try {
     test = req.session.user.username;
-
     if (req.session.user.manager) {
       try {
         const query = "SELECT u.username, u.firstname, u.lastname, COUNT(t.taskid) AS task_count FROM users u LEFT JOIN tasks t ON t.employeename = u.username WHERE u.branch = $1 AND u.username != $2 GROUP BY u.username, u.firstname, u.lastname;";
@@ -446,6 +455,22 @@ app.post("/deleteTask", async (req, res) => {
     res.status(500).send("Unknown Error");
   }
 });
+app.post("/notifyOrginization", async (req, res) => {
+  const query = "INSERT INTO alerts (user_id, message, organization) VALUES ($1, $2, $3)"
+  try
+  {
+    await db.none(query, [
+      req.session.user.username,
+      req.body.notificationText,
+      req.session.user.branch,
+    ]);
+    res.redirect("/tasks?message=Notification sent!");
+  }
+  catch (error) {
+    console.error("Could Not Create Notification", error);
+    res.status(500).send("Unknown Error");
+  }
+});
 
 app.get("/welcome", (req, res) => {
   res.json({ status: "success", message: "Welcome!" });
@@ -456,3 +481,4 @@ async function getTasks(user) {
   if (!user) return;
   return await db.any(query, [user.username]);
 }
+
