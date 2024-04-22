@@ -10,7 +10,7 @@ const axios = require("axios");
 const { error } = require("console");
 
 const app = express();
-const PORT = process.env.WEB_PORT == undefined ? 3000 : process.env.WEB_PORT;
+const PORT = process.env.PORT == undefined ? 3000 : process.env.PORT;
 
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -34,7 +34,7 @@ app.use(bodyParser.json()); // specify the usage of JSON for parsing request bod
 //database configuration
 const dbConfig = {
   host: process.env.host, // the database server
-  port: process.env.DB_PORT, // the database port
+  port: 5432, // the database port
   database: process.env.POSTGRES_DB, // the database name
   user: process.env.POSTGRES_USER, // the user account to connect with
   password: process.env.POSTGRES_PASSWORD, // the password of the user account
