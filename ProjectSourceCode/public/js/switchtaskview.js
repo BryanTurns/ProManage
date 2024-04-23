@@ -52,26 +52,24 @@ function generateTaskRow(task) {
   taskpriority.style.overflow = "auto";
   taskpriority.style.maxHeight = "100%";
   taskpriority.innerHTML = task.taskpriority;
-  switch(task.taskpriority)
-  {
+  switch (task.taskpriority) {
     case 5:
       row.style.backgroundColor = "red";
       break;
-      case 4:
+    case 4:
       row.style.backgroundColor = "orange";
       break;
-      case 3:
+    case 3:
       row.style.backgroundColor = "yellow";
       break;
-      case 2:
+    case 2:
       row.style.backgroundColor = "green";
       break;
-      case 1:
+    case 1:
       row.style.backgroundColor = "white";
       break;
   }
   row.appendChild(taskpriority);
-
 
   const taskdescription = document.createElement("div");
   taskdescription.classList.add(["col-sm"]);
@@ -98,7 +96,7 @@ function generateTaskRow(task) {
   updatestatusbutton.innerHTML = "Update Status";
   updatestatusbutton.setAttribute(
     "onclick",
-    `testfunc('${task.taskname}', '${task.taskpriority}', '${task.taskstatus}', ${task.complete})`
+    `testfunc('${task.taskname}', '${task.taskstatus}', ${task.complete})`
   );
 
   updatestatusdiv.appendChild(updatestatusbutton);

@@ -96,17 +96,14 @@ const auth = (req, res, next) => {
 app.use(auth);
 
 app.get("/home", async (req, res) => {
-  try{
+  try {
     const query2 = "SELECT * FROM alerts WHERE organization = $1;";
     const alerts = await db.any(query2, [req.session.user.branch]);
-    res.render("./pages/home", { auth: req.session.user,  alerts: alerts,});
-  }
-  catch (error) {
+    res.render("./pages/home", { auth: req.session.user, alerts: alerts });
+  } catch (error) {
     console.error("Database error:", error);
     res.status(500).send("Internal Server Error");
   }
-  
-  
 });
 app.get("/home", (req, res) => {
   res.redirect("/");
@@ -119,9 +116,13 @@ app.get("/tasks", async (req, res) => {
     test = req.session.user.username;
     if (req.session.user.manager) {
       try {
-        const query = "SELECT u.username, u.firstname, u.lastname, COUNT(t.taskid) AS task_count FROM users u LEFT JOIN tasks t ON t.employeename = u.username WHERE u.branch = $1 AND u.username != $2 GROUP BY u.username, u.firstname, u.lastname;";
+        const query =
+          "SELECT u.username, u.firstname, u.lastname, COUNT(t.taskid) AS task_count FROM users u LEFT JOIN tasks t ON t.employeename = u.username WHERE u.branch = $1 AND u.username != $2 GROUP BY u.username, u.firstname, u.lastname;";
         //console.log("Branch:", req.session.user.branch, "Username: ", req.session.user.username);
-        const users = await db.any(query, [req.session.user.branch, req.session.user.username]);
+        const users = await db.any(query, [
+          req.session.user.branch,
+          req.session.user.username,
+        ]);
         const message = req.query.message;
         res.render("./pages/managerTasks", {
           auth: req.session.user,
@@ -133,7 +134,8 @@ app.get("/tasks", async (req, res) => {
         res.status(500).send("Internal Server Error");
       }
     } else {
-      const query = "SELECT * FROM tasks WHERE employeeName = $1 ORDER BY taskpriority DESC";
+      const query =
+        "SELECT * FROM tasks WHERE employeeName = $1 ORDER BY taskpriority DESC";
       // console.log(req.session.user);
       const message = req.query.message;
       const tasks = await db.any(query, [req.session.user.username]);
@@ -347,7 +349,12 @@ app.post("/createEmployeeTask", async (req, res) => {
   try {
     db.none(
       "INSERT INTO tasks (employeeName, taskName, taskDescription, taskstatus, taskpriority) VALUES ($1, $2, $3, 'N/A', $4)",
-      [req.body.employee, req.body.taskName, req.body.description, req.body.taskPriority]
+      [
+        req.body.employee,
+        req.body.taskName,
+        req.body.description,
+        req.body.taskPriority,
+      ]
     )
       .then((msg) => {
         const query =
@@ -376,12 +383,15 @@ app.post("/createEmployeeTask", async (req, res) => {
 app.post("/updateStatus", async (req, res) => {
   const query =
     "UPDATE tasks SET taskstatus = $1, complete = $2 WHERE taskname = $3";
+  console.log(req.body);
   try {
-    await db.none(query, [
+    db.none(query, [
       req.body.status,
       req.body.complete ? req.body.complete : false,
       req.body.taskname,
-    ]);
+    ]).catch((err) => {
+      console.log(err);
+    });
     const tasks = await getTasks(req.session.user);
     res.redirect("/tasks?message=Status updated successfully");
     // res.render("./pages/employeeTasks", {
@@ -420,7 +430,8 @@ app.get("/getListofEmployeeTasks", async (req, res) => {
   }
 });
 app.post("/updateTask", async (req, res) => {
-  const query = "UPDATE tasks SET taskdescription = $1, taskpriority = $4 WHERE taskid = $2 AND employeename = $3";
+  const query =
+    "UPDATE tasks SET taskdescription = $1, taskpriority = $4 WHERE taskid = $2 AND employeename = $3";
   console.log(
     req.body.updatedDescription,
     req.body.employeeUsername,
@@ -456,17 +467,16 @@ app.post("/deleteTask", async (req, res) => {
   }
 });
 app.post("/notifyOrginization", async (req, res) => {
-  const query = "INSERT INTO alerts (user_id, message, organization) VALUES ($1, $2, $3)"
-  try
-  {
+  const query =
+    "INSERT INTO alerts (user_id, message, organization) VALUES ($1, $2, $3)";
+  try {
     await db.none(query, [
       req.session.user.username,
       req.body.notificationText,
       req.session.user.branch,
     ]);
     res.redirect("/tasks?message=Notification sent!");
-  }
-  catch (error) {
+  } catch (error) {
     console.error("Could Not Create Notification", error);
     res.status(500).send("Unknown Error");
   }
@@ -481,4 +491,3 @@ async function getTasks(user) {
   if (!user) return;
   return await db.any(query, [user.username]);
 }
-
