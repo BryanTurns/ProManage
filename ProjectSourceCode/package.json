@@ -32,7 +32,7 @@
   "scripts": {
     "prestart": "npm install",
     "start": "nodemon -L index.js",
-    "start-tailwind": "npx tailwindcss -i ./public/styles/main.css -o ./public/styles/output.css ",
+    "start-tailwind": "npx tailwindcss -i ./public/styles/main.css -o ./public/styles/output.css --watch",
     "prod": "npm run prestart && npm run start-tailwind",
     "dev": "npm run start-tailwind && npm start",
     "test": "mocha",

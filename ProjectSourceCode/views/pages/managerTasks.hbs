@@ -1,71 +1,129 @@
-
 <title> Manager Tasks </title>
-<style>
+{{! <style>
   .container { width: 33.33%; height: 90%; background-color: black; float: left;
   } .col-sm { text-align: center; display: flex; flex-direction: column; top:
   50; }
-</style>
+</style> }}
 <script
   src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"
 ></script>
 
+<div class="">
+  <div class="container-fluid">
 
-<div class="container">
-  <div class="row" color="red">
-    <div class="col-sm">
-      <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#create-task">Create Task</button>
-      <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#update-task">Update Task</button>
-      <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#delete-task">Delete Task</button>
-      <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#notify-organization">Notify Organization</button>
-      {{!-- <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#notify-employee">Notify Employee</button> --}}
-    </div>
-  </div>
-</div>
-<div>
+    <div class="row list-group bg-gray-400 h-screen p-3">
+      <div class="col container">
+        <h2 class="text-center text-4xl underline">Organization Employee List</h2>
+        <div class="row p-3 justify-content-center" color="red">
+          <div class="col-sm d-flex justify-content-center">
+            <button
+              type="button"
+              class="btn btn-primary mb-2"
+              data-toggle="modal"
+              data-target="#create-task"
+            >Create Task</button>
+          </div>
+          <div class="col-sm d-flex justify-content-center">
+            <button
+              type="button"
+              class="btn btn-primary mb-2 m-auto"
+              data-toggle="modal"
+              data-target="#update-task"
+            >Update Task</button>
+          </div>
+          <div class="col-sm d-flex justify-content-center"><button
+              type="button"
+              class="btn btn-primary mb-2"
+              data-toggle="modal"
+              data-target="#delete-task"
+            >Delete Task</button></div>
+          <div class="col-sm d-flex justify-content-center"><button
+              type="button"
+              class="btn btn-primary mb-2"
+              data-toggle="modal"
+              data-target="#notify-organization"
+            >Notify Organization</button></div>
 
+          {{! <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#notify-employee">Notify Employee</button> }}
 
-
-
-
-
-  
-  <div class="list-group">
-    <h2>Organization Employee List:</h2>
-    {{#each users}}
-      <button type="button" class="list-group-item d-flex justify-content-between align-items-center" data-toggle="modal" data-target="#userModal{{this.username}}" data-username="{{this.username}}">{{this.firstname}} {{this.lastname}} 
-        <span class="badge badge-primary badge-pill">{{this.task_count}}</span> 
-      </button> 
-      <div class="modal fade" id="userModal{{this.username}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">{{this.firstname}} {{this.lastname}} Task List:</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+        {{#each users}}
+          <div class="row my-2">
+            <button
+              type="button"
+              class="list-group-item d-flex justify-content-between align-items-center w-full"
+              data-toggle="modal"
+              data-target="#userModal{{this.username}}"
+              data-username="{{this.username}}"
+            >{{this.firstname}}
+              {{this.lastname}}
+              <span
+                class="badge badge-primary badge-pill"
+              >{{this.task_count}}</span>
+            </button>
+          </div>
+          <div
+            class="modal fade"
+            id="userModal{{this.username}}"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5
+                    class="modal-title"
+                    id="exampleModalLabel"
+                  >{{this.firstname}}
+                    {{this.lastname}}
+                    Task List:</h5>
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-dismiss="modal"
+                  >Close</button>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        {{/each}}
       </div>
-    {{/each}}
+    </div>
   </div>
+
 </div>
 
-
-
-
-
-<div class="modal fade" id="notify-employee" tabindex="-1" role="dialog" aria-hidden="true">
+<div
+  class="modal fade"
+  id="notify-employee"
+  tabindex="-1"
+  role="dialog"
+  aria-hidden="true"
+>
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="notify-employee-title">Notify Employee</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -74,7 +132,7 @@
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">Employee:</label>
             <select class="form-select" name="employee" id="recipient-name">
-              <option value = "" selected>Select an Employee</option>
+              <option value="" selected>Select an Employee</option>
               {{#each users}}
                 <option value="{{this.username}}">{{this.firstname}}
                   {{this.lastname}}</option>
@@ -82,12 +140,24 @@
             </select>
           </div>
           <div class="form-group">
-            <label for="notification" class="col-form-label">Notification:</label>
-            <input type="text" class="form-control" id="notification" name="notificationText"/>
+            <label
+              for="notification"
+              class="col-form-label"
+            >Notification:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="notification"
+              name="notificationText"
+            />
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Disregard</button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-dismiss="modal"
+          >Disregard</button>
           <button type="submit" class="btn btn-primary">Send Notification</button>
         </div>
       </form>
@@ -95,44 +165,72 @@
   </div>
 </div>
 
-
-
-
-
 <form action="/notifyOrginization" method="POST">
-  <div class="modal fade" id="notify-organization" tabindex="-1" role="dialog" aria-hidden="true">
+  <div
+    class="modal fade"
+    id="notify-organization"
+    tabindex="-1"
+    role="dialog"
+    aria-hidden="true"
+  >
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="notify-organization-title">Notify Organization</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <h5 class="modal-title" id="notify-organization-title">Notify
+            Organization</h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-          <div class="modal-body">
-            <div class="form-group">
-              <label for="notification" class="col-form-label">Notification:</label>
-              <input type="text" class="form-control" id="notification" name="notificationText"/>
-            </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label
+              for="notification"
+              class="col-form-label"
+            >Notification:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="notification"
+              name="notificationText"
+            />
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Disregard</button>
-            <button type="submit" class="btn btn-primary">Send Notification</button>
-          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-dismiss="modal"
+          >Disregard</button>
+          <button type="submit" class="btn btn-primary">Send Notification</button>
+        </div>
       </div>
     </div>
   </div>
 </form>
 
-
-
-
-<div class="modal fade" id="create-task" tabindex="-1" role="dialog" aria-hidden="true">
+<div
+  class="modal fade"
+  id="create-task"
+  tabindex="-1"
+  role="dialog"
+  aria-hidden="true"
+>
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="create-event-title">Create Task</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -141,7 +239,7 @@
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">Employee:</label>
             <select class="form-select" name="employee" id="recipient-name0">
-              <option value = "" selected>Select an Employee</option>
+              <option value="" selected>Select an Employee</option>
               {{#each users}}
                 <option value="{{this.username}}">{{this.firstname}}
                   {{this.lastname}}</option>
@@ -161,15 +259,28 @@
           </div>
           <div class="form-group">
             <label for="task-name" class="col-form-label">Task Name:</label>
-            <input type="text" class="form-control" id="task-name" name="taskName"/>
+            <input
+              type="text"
+              class="form-control"
+              id="task-name"
+              name="taskName"
+            />
           </div>
           <div class="form-group">
             <label for="message-text" class="col-form-label">Task Description:</label>
-            <textarea class="form-control" id="message-text" name="description"></textarea>
+            <textarea
+              class="form-control"
+              id="message-text"
+              name="description"
+            ></textarea>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Disregard</button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-dismiss="modal"
+          >Disregard</button>
           <button type="submit" class="btn btn-primary">Assign Task</button>
         </div>
       </form>
@@ -178,19 +289,34 @@
 </div>
 
 <form id="updateTaskForm" action="/updateTask" method="post">
-  <div class="modal fade" id="update-task" tabindex="-1" role="dialog" aria-hidden="true">
+  <div
+    class="modal fade"
+    id="update-task"
+    tabindex="-1"
+    role="dialog"
+    aria-hidden="true"
+  >
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="update-event-title">Update Task</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">Employee:</label>
-            <select class="form-select" id="employeeSelect" name="employeeUsername">
+            <select
+              class="form-select"
+              id="employeeSelect"
+              name="employeeUsername"
+            >
               <option selected>Select an Employee</option>
               {{#each users}}
                 <option value="{{this.username}}">{{this.firstname}}
@@ -205,22 +331,42 @@
             </select>
           </div>
           <div class="form-group">
-            <label for="taskPriority" class="col-form-label">Update Task Priority: </label>
-            <select class="form-select" id="taskPrioritySelect" name="taskPriorityName">
+            <label for="taskPriority" class="col-form-label">Update Task
+              Priority:
+            </label>
+            <select
+              class="form-select"
+              id="taskPrioritySelect"
+              name="taskPriorityName"
+            >
               <option selected>Select a task</option>
             </select>
           </div>
           <div class="form-group">
-            <label for="taskDescriptionDisplay" class="col-form-label"> Current Task Description:</label>
-            <textarea class="form-control" id="taskDescriptionDisplay" readonly></textarea>
+            <label for="taskDescriptionDisplay" class="col-form-label">
+              Current Task Description:</label>
+            <textarea
+              class="form-control"
+              id="taskDescriptionDisplay"
+              readonly
+            ></textarea>
           </div>
           <div class="form-group">
-            <label for="message-text" class="col-form-label">Update Task Description:</label>
-            <textarea class="form-control" id="updatedDescription" name="updatedDescription"></textarea>
+            <label for="message-text" class="col-form-label">Update Task
+              Description:</label>
+            <textarea
+              class="form-control"
+              id="updatedDescription"
+              name="updatedDescription"
+            ></textarea>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Disregard</button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-dismiss="modal"
+          >Disregard</button>
           <button type="submit" class="btn btn-primary">Update Task</button>
         </div>
       </div>
@@ -229,20 +375,35 @@
 </form>
 
 <form id="deleteTaskFrom" action="/deleteTask" method="post">
-  <div class="modal fade" id="delete-task" tabindex="-1" role="dialog" aria-hidden="true">
+  <div
+    class="modal fade"
+    id="delete-task"
+    tabindex="-1"
+    role="dialog"
+    aria-hidden="true"
+  >
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="delete-event-title">Delete Task</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">Employee:</label>
-            <select class="form-select" id="deleteEmployeeSelect" name="deleteEmployeeSelect">
-              <option value="" selected >Select an Employee</option>
+            <select
+              class="form-select"
+              id="deleteEmployeeSelect"
+              name="deleteEmployeeSelect"
+            >
+              <option value="" selected>Select an Employee</option>
               {{#each users}}
                 <option value="{{this.username}}">{{this.firstname}}
                   {{this.lastname}}</option>
@@ -251,24 +412,36 @@
           </div>
           <div class="form-group">
             <label for="deleteTaskSelect" class="col-form-label">Task Name:</label>
-            <select class="form-select" id="deleteTaskSelect" name="deleteTaskName">
+            <select
+              class="form-select"
+              id="deleteTaskSelect"
+              name="deleteTaskName"
+            >
               <option selected>Please Select an employee!</option>
             </select>
           </div>
           <div class="form-group">
-            <label for="deleteTaskDescriptionDisplay" class="col-form-label"> Current Description:</label>
-            <textarea class="form-control" id="deleteTaskDescriptionDisplay" readonly></textarea>
+            <label for="deleteTaskDescriptionDisplay" class="col-form-label">
+              Current Description:</label>
+            <textarea
+              class="form-control"
+              id="deleteTaskDescriptionDisplay"
+              readonly
+            ></textarea>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Disregard</button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-dismiss="modal"
+          >Disregard</button>
           <button type="submit" class="btn btn-danger">Delete Task</button>
         </div>
       </div>
     </div>
   </div>
 </form>
-
 <script>
   document.getElementById('employeeSelect').addEventListener('change', function() {
     const username = this.value;
