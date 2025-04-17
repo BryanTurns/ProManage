@@ -10,7 +10,6 @@ services:
       - ./init_data:/docker-entrypoint-initdb.d
   web:
     image: node:lts
-    user: "node"
     working_dir: /repository
     env_file: .env
     environment:
@@ -20,7 +19,8 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./:/repository
-    command: "npm run dev"
+      - .:/repository:cached
+      - /repository/node_modules
+    command: sh -c "npm install && chown -R node:node /repository && npm run dev"
 volumes:
   group-project:

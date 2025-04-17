@@ -12,4 +12,4 @@ EXPOSE $WEB_PORT
 
 ENV NODE_ENV="development"
 
-CMD ["npm", "run", "dev"]
+CMD ["sh", "-c", "npm install && npm run dev"]
